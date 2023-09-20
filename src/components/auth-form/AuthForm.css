@@ -8,9 +8,6 @@ input[type=email], input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
-  
-img {
-}
 
 .auth--container{
   display: flex;
@@ -28,12 +25,11 @@ img {
 
 button{
   align-self: center;
-  margin-top:50px !important;
 }
   
 
 @media screen and (max-width: 1250px) {
-  img{
+  .auth--image{
     display: none;
   }
 }

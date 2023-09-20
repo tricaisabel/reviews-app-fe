@@ -20,14 +20,21 @@ export default function Hero() {
           Join the team of expert reviewers and help us find the best spots.
         </p>
 
-        <button className="button_primary" onClick={() => navigate("/sign-up")}>
-          All Companies
-        </button>
+        <div className="hero--buttons">
+          <button
+            className="button_primary blue"
+            onClick={() => navigate("/sign-up")}
+          >
+            Sign Up
+          </button>
 
-        <button
-          className="button_primary"
-          onClick={() => navigate("/sign-up")}
-        ></button>
+          <button
+            className="button_primary yellow"
+            onClick={() => navigate("/log-in")}
+          >
+            Log In
+          </button>
+        </div>
       </div>
     </div>
   );

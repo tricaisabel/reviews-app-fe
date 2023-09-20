@@ -1,6 +1,5 @@
 .hero--image{
     width: 55%;
-    margin-top:50px;
     align-self: center;
 }
 
@@ -34,6 +33,10 @@
 .secondary{
     font-size: 20px;
     justify-self: center;
+}
+
+.hero--buttons{
+    display: flex;
 }
 
 @media screen and (max-width: 1000px) {
