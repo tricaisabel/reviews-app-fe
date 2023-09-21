@@ -9,6 +9,9 @@
 .star-rating{
   margin-top: 5px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .on {

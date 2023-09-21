@@ -1,13 +1,13 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 import "./Auth.css";
 import image from "../../assets/auth-illustration.avif";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../api/auth";
-import { Action, SET_EMAIL, SET_URL } from "../../reducers/action.type";
+import { Action, ActionType } from "../../reducers/action.type";
 import { StateContext, DispatchContext } from "../../App";
 
-export const SIGN_UP = "SIGN_UP";
-export const LOG_IN = "LOG_IN";
+export const SIGN_UP = "signup";
+export const LOG_IN = "login";
 
 interface AuthFormProps {
   type: string;
@@ -16,19 +16,26 @@ interface AuthFormProps {
 const Auth: FC<AuthFormProps> = ({ type }) => {
   const navigate = useNavigate();
   const text = type === SIGN_UP ? "Sign Up" : "Log In";
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
+  const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
 
   function setEmail(email: string) {
-    dispatch({ type: SET_EMAIL, payload: email });
+    dispatch({ type: ActionType.SET_EMAIL, payload: email });
   }
 
   function setUrl(url: string) {
-    dispatch({ type: SET_URL, payload: url });
+    dispatch({ type: ActionType.SET_URL, payload: url });
+  }
+
+  function setLoginForm(event: any) {
+    const { name, value } = event.target;
+    dispatch({
+      type: ActionType.SET_LOGIN_FORM,
+      payload: {
+        name,
+        value,
+      },
+    });
   }
 
   function getLinkText(): string {
@@ -39,15 +46,6 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
       return "You don't have an account?";
     }
     return "";
-  }
-
-  function updateFormData(event: any) {
-    const { name, value } = event.target;
-
-    setForm((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   }
 
   function getButtonClass() {
@@ -61,7 +59,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
 
   async function submitNewUser(event: any) {
     event.preventDefault();
-    const response = await auth(form, type);
+    const response = await auth(state.loginForm, type);
     if (!response.error) {
       setEmail(response.email);
       setUrl(response.url);
@@ -86,8 +84,8 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
             placeholder="Enter Email"
             name="email"
             required
-            value={form.email}
-            onChange={updateFormData}
+            value={state.loginForm.email}
+            onChange={setLoginForm}
           />
 
           <label htmlFor="password">
@@ -98,8 +96,8 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
             placeholder="Enter Password"
             name="password"
             required
-            value={form.password}
-            onChange={updateFormData}
+            value={state.loginForm.password}
+            onChange={setLoginForm}
           />
 
           <a onClick={clickLink}>{getLinkText()}</a>

@@ -8,7 +8,6 @@ import {
 import { ICompany } from "../card/Card";
 import "./Company.css";
 import Review, { IReview } from "../review/Review";
-import NewReview from "../new-review/NewReview";
 import StarRating from "../star-rating/StarRating";
 
 const USER_IMAGE =
@@ -22,7 +21,6 @@ const Company: FC = () => {
   const [userReview, setUserReview] = useState<IReview>();
   const [latestReviews, setLatestReviews] = useState<IReview[]>([]);
   const [end, setEnd] = useState(3);
-  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     if (!companyId) {
@@ -119,10 +117,10 @@ const Company: FC = () => {
                   className="profile--image"
                 />
 
-                <div className="review--details">
+                <div className="review--details" onClick={openNewReview}>
                   <h3>Rate and review</h3>
                   <p className="small">Share your experience to help others.</p>
-                  <StarRating active={true} />
+                  <StarRating />
                 </div>
               </div>
             )}

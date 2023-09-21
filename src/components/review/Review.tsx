@@ -48,7 +48,7 @@ const Review: FC<IReview> = ({
         <h3 className="review--name">{name}</h3>
 
         <div className="review--rating">
-          <StarRating active={false} />
+          <StarRating value={rating} />
           <p className="small">{timeAgo(createdAt)}</p>
         </div>
 

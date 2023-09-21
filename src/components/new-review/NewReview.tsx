@@ -1,10 +1,12 @@
 import { FC, useState } from "react";
 import StarRating from "../star-rating/StarRating";
+import { useNavigate } from "react-router-dom";
 
 interface NewReviewProps {}
 
 const NewReview: FC<NewReviewProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -30,9 +32,15 @@ const NewReview: FC<NewReviewProps> = () => {
   return (
     <>
       <div className="container--info">
+        <a className="blue" onClick={() => navigate("/companies")}>
+          <span className="previous">&#8249;</span> All Companies
+        </a>
+
         <h1 className="center">Add a review</h1>
 
-        <StarRating active={true} />
+        <div className="center">
+          <StarRating showText={true} />
+        </div>
 
         <form onSubmit={openModal}>
           <label htmlFor="name">

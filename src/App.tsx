@@ -5,16 +5,11 @@ import "./App.css";
 import Companies from "./components/companies/Companies";
 import Auth, { LOG_IN, SIGN_UP } from "./components/auth/Auth";
 import Company from "./components/company/Company";
-import { Dispatch, createContext, useReducer, useState } from "react";
+import { Dispatch, createContext, useReducer } from "react";
 import NewReview from "./components/new-review/NewReview";
-import { reducer, State } from "./reducers/app.reducer";
+import { initialState, reducer, State } from "./reducers/app.reducer";
 import { Action } from "./reducers/action.type";
 
-const initialState: State = {
-  email: localStorage.getItem("email") ?? "",
-  url: localStorage.getItem("url") ?? "",
-  rating: 0,
-};
 
 export const StateContext = createContext<State>(initialState);
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(
