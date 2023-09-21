@@ -2,8 +2,9 @@ import heroImage from "../../assets/hero.png";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
+import { FC } from "react";
 
-export default function Hero() {
+const Hero = () => {
   const navigate = useNavigate();
 
   return (
@@ -22,20 +23,22 @@ export default function Hero() {
 
         <div className="hero--buttons">
           <button
-            className="button_primary blue"
-            onClick={() => navigate("/sign-up")}
+            className="button_primary background_yellow"
+            onClick={() => navigate("/signup")}
           >
             Sign Up
           </button>
 
           <button
-            className="button_primary yellow"
-            onClick={() => navigate("/log-in")}
+            className="button_primary background_blue"
+            onClick={() => navigate("/companies")}
           >
-            Log In
+            Companies
           </button>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Hero;

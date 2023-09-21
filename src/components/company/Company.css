@@ -1,0 +1,22 @@
+.rating--box{
+    background-color: #fac402;
+    color: black;
+    width: fit-content;
+    padding: 13px 15px;
+    font-size: 15px;
+    border-radius: 7px;
+}
+
+.summary--info{
+    display:flex;
+    align-items: center;
+    margin:20px 0px;
+}
+
+.summary--counter{
+    margin-left: 20px;
+}
+
+.right{
+    margin-left: auto;
+}

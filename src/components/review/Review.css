@@ -1,0 +1,32 @@
+.review--name{
+    margin: 0px;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.review--details{
+    margin-left: 20px;
+}
+
+.review--container{
+    display: flex;
+    margin: 10px 0px;
+}
+
+.review--rating{
+     display: flex;
+     align-items: center;
+     flex-wrap: wrap;
+}
+
+.review--rating p{
+    margin-bottom:5px;
+    margin-top: 0px;
+    margin-left: 10px
+}
+
+.review--description{
+    margin: 0px;
+    color: black;
+    font-size: 16px;
+}

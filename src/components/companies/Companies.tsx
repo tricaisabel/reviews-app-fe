@@ -1,24 +1,36 @@
-import { useEffect } from "react";
-import Card, { CardProps } from "../card/Card";
+import { useEffect, useState } from "react";
+import Card, { ICompany } from "../card/Card";
 import "./Companies.css";
-import { getCompanies } from "../../api/companies";
+import { getCompanies } from "../../api/company";
+import { useNavigate } from "react-router-dom";
 
 export default function Companies() {
+  const [companies, setCompanies] = useState<ICompany[]>([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    getCompanies()
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    getCompanies().then((response) => {
+      if (!response.error) {
+        setCompanies(response);
+        console.log(response);
+      } else {
+        navigate("/login");
+      }
+    });
   }, []);
-  const cardProps: CardProps = {
-    name: "Company One",
-    img: "https://firebasestorage.googleapis.com/v0/b/reviews-app-9ff65.appspot.com/o/companies%2F1695060638944_mgg-vitchakorn-vBOxsZrfiCw-unsplash.jpg?alt=media&token=c109e0cf-48d3-433d-95e8-be173fdedf81",
-    averageRating: 3.4,
-    reviewCount: 12,
-  };
+
   return (
-    <div className="companies--container">
-      <h1>Companies</h1>
-      <Card {...cardProps} />
+    <div className="main--container">
+      <a className="blue" onClick={() => navigate("/")}>
+        <span className="previous">&#8249;</span> Home
+      </a>
+      <h1 className="center">Companies</h1>
+
+      <div className="companies--list">
+        {companies.map((company) => (
+          <Card key={company._id} {...company} />
+        ))}
+      </div>
     </div>
   );
 }
