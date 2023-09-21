@@ -5,7 +5,6 @@ export interface ICompany {
   name: string;
   _id: string;
   end: number;
-  rating: number;
 }
 
 export interface ILoginForm {
@@ -16,6 +15,12 @@ export interface ILoginForm {
 export interface IReviewForm {
   name: string;
   description: string;
+  rating: number;
+}
+
+export interface IToast {
+  message: string;
+  show: boolean;
 }
 
 export interface IReview {
@@ -36,4 +41,5 @@ export interface IState {
   company: ICompany;
   latestReviews: IReview[];
   userReview: IReview | null;
+  toast: IToast;
 }

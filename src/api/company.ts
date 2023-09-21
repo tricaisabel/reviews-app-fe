@@ -12,14 +12,17 @@ export const getCompanies = async (
 ) => {
   return API.get<ICompany[]>("/companies")
     .then((response: AxiosResponse) => {
-      if (!response.data.error) {
-        setCompanies(response.data);
+      const { companies } = response.data;
+      console.log(companies);
+      if (companies) {
+        setCompanies(companies);
       } else {
         navigate("/login");
       }
     })
     .catch((error: AxiosError) => {
-      console.log(error);
+      console.log(error.response?.data);
+      navigate("/login");
     });
 };
 
@@ -29,10 +32,11 @@ export const getCompany = async (
 ) => {
   return API.get<ICompany>(`/companies/${companyId}`)
     .then((response: AxiosResponse) => {
-      setCompany(response.data);
+      const { company } = response.data;
+      if (company) setCompany(company);
     })
     .catch((error: AxiosError) => {
-      console.log(error);
+      console.log(error.response?.data);
     });
 };
 
@@ -42,10 +46,11 @@ export const getUserReview = async (
 ) => {
   return API.get<IReview>(`companies/${companyId}/reviews/user`)
     .then((response: AxiosResponse) => {
-      setUserReview(response.data.review);
+      const { review } = response.data;
+      if (review) setUserReview(review);
     })
     .catch((error: AxiosError) => {
-      console.log(error);
+      console.log(error.response?.data);
     });
 };
 
@@ -59,9 +64,11 @@ export const getLatestReviews = async (
     `companies/${companyId}/reviews/latest?end=${param}`
   )
     .then((response: AxiosResponse) => {
-      setLatestReviews(response.data);
+      const { reviews } = response.data;
+      console.log(reviews);
+      if (reviews) setLatestReviews(reviews);
     })
     .catch((error: AxiosError) => {
-      console.log(error);
+      console.log(error.response?.data);
     });
 };

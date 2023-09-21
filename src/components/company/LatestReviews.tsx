@@ -25,7 +25,7 @@ export const LatestReview = () => {
 
   useEffect(() => {
     if (!state.company._id) {
-      return navigate("/");
+      return navigate("/companies");
     }
     getLatestReviews(state.company._id, state.company.end, setLatestReviews);
   }, [state.company.end, state.company._id]);
@@ -33,12 +33,13 @@ export const LatestReview = () => {
   return (
     <>
       <h3>Latest Reviews</h3>
-      {state.latestReviews.map((review: IReview, index: number) => (
-        <div key={review._id}>
-          {index !== 0 && <hr />}
-          <Review {...review} />
-        </div>
-      ))}
+      {state.latestReviews.length !== 0 &&
+        state.latestReviews.map((review: IReview, index: number) => (
+          <div key={review._id}>
+            {index !== 0 && <hr />}
+            <Review {...review} />
+          </div>
+        ))}
 
       {state.company.end < state.company.reviewCount && (
         <a className="blue bold center" onClick={loadMoreReviews}>
@@ -53,7 +54,7 @@ export const LatestReview = () => {
           </a>
         )}
 
-      {state.latestReviews.length === 0 && (
+      {state.company.reviewCount == 0 && (
         <p className="small">No reviews yet. You can be our first reviewer.</p>
       )}
     </>

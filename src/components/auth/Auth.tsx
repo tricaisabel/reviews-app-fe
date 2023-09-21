@@ -27,6 +27,17 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
     dispatch({ type: ActionType.SET_URL, payload: url });
   }
 
+  const showToastMessage = (message: string) => {
+    dispatch({
+      type: ActionType.SHOW_TOAST,
+      payload: message,
+    });
+
+    setTimeout(() => {
+      dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
+    }, 3000);
+  };
+
   function setLoginForm(event: any) {
     const { name, value } = event.target;
     dispatch({
@@ -59,19 +70,19 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
 
   async function submitNewUser(event: any) {
     event.preventDefault();
-    const response = await auth(state.loginForm, type);
-    if (!response.error) {
-      setEmail(response.email);
-      setUrl(response.url);
-      localStorage.setItem("email", response.email);
-      localStorage.setItem("url", response.url);
-      navigate("/companies");
-    }
+    await auth(
+      state.loginForm,
+      type,
+      setUrl,
+      setEmail,
+      navigate,
+      showToastMessage
+    );
   }
 
   return (
     <>
-      <form onSubmit={submitNewUser} className="split--container">
+      <form onSubmit={submitNewUser}>
         <img src={image} alt="Auth illustration" className="container--image" />
 
         <div className="container--info">

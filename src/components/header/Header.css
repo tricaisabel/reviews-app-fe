@@ -33,4 +33,8 @@
     .header--profile p{
         margin-left: auto;
     }
+
+    .header{
+        justify-content: space-between;
+    }
 }

@@ -6,11 +6,12 @@ import Companies from "./components/companies/Companies";
 import Auth, { LOG_IN, SIGN_UP } from "./components/auth/Auth";
 import Company from "./components/company/Company";
 import { Dispatch, createContext, useReducer } from "react";
-import NewReview from "./components/new-review/NewReview";
+import NewReview from "./components/newReview/NewReview";
 import { reducer } from "./store/reducer";
 import { Action } from "./store/actions";
 import { IState } from "./store/interfaces";
-import { initialState } from "./store/intial-state";
+import { initialState } from "./store/intialState";
+import Toast from "./components/toast/Toast";
 
 export const StateContext = createContext<IState>(initialState);
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(
@@ -40,6 +41,7 @@ function App() {
                 />
               </Routes>
             </BrowserRouter>
+            <Toast />
           </div>
         </div>
       </DispatchContext.Provider>

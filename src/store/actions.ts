@@ -35,6 +35,10 @@ export type Action =
       payload: IReview;
     }
   | {
+      type: typeof ActionType.SHOW_TOAST | typeof ActionType.HIDE_TOAST;
+      payload: string;
+    }
+  | {
       type:
         | typeof ActionType.LOAD_DEFAULT_REVIEWS
         | typeof ActionType.LOAD_ALL_REVIEWS
@@ -54,4 +58,6 @@ export enum ActionType {
   LOAD_MORE_REVIEWS = "LOAD_MORE_REVIEWS",
   LOAD_DEFAULT_REVIEWS = "LOAD_DEFAULT_REVIEWS",
   LOAD_ALL_REVIEWS = "LOAD_ALL_REVIEWS",
+  SHOW_TOAST = "SHOW_TOAST",
+  HIDE_TOAST = "HIDE_TOAST",
 }

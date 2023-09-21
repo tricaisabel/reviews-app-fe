@@ -3,6 +3,7 @@ import StarRating from "../star-rating/StarRating";
 import { useNavigate } from "react-router-dom";
 import { DispatchContext, StateContext } from "../../App";
 import { Action, ActionType } from "../../store/actions";
+import "./NewReview.css";
 
 interface NewReviewProps {}
 
@@ -18,6 +19,7 @@ const NewReview: FC<NewReviewProps> = () => {
 
   function openModal(event: any) {
     event.preventDefault();
+    console.log(state.reviewForm);
     setIsModalOpen(true);
   }
 
@@ -34,8 +36,8 @@ const NewReview: FC<NewReviewProps> = () => {
 
   return (
     <>
-      <div className="container--info">
-        <a className="blue" onClick={() => navigate("/companies")}>
+      <div className="new--review--container">
+        <a className="blue previous-btn" onClick={() => navigate("/companies")}>
           <span className="previous">&#8249;</span> All Companies
         </a>
 
@@ -68,11 +70,17 @@ const NewReview: FC<NewReviewProps> = () => {
             onChange={updateReviewForm}
           />
 
-          <button className="button_primary background_blue" type="submit">
-            Submit
-          </button>
+          <div className="add--new-review">
+            <button
+              className="button_primary background_blue center"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
         </form>
       </div>
+
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">

@@ -10,6 +10,7 @@ export const initialState: IState = {
   reviewForm: {
     name: "",
     description: "",
+    rating: 0,
   },
   companies: [],
   company: {
@@ -19,8 +20,11 @@ export const initialState: IState = {
     reviewCount: 0,
     end: 3,
     _id: "",
-    rating: 0,
   },
   latestReviews: [],
   userReview: null,
+  toast: {
+    message: "",
+    show: false,
+  },
 };

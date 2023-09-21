@@ -1,10 +1,7 @@
-import { FC, useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getCompany, getLatestReviews, getUserReview } from "../../api/company";
+import { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Company.css";
-import { ICompany } from "../../store/interfaces";
-import { StateContext, DispatchContext } from "../../App";
-import { Action, ActionType } from "../../store/actions";
+import { StateContext } from "../../App";
 import { Summary } from "./Summary";
 import { UserReview } from "./UserReview";
 import { LatestReview } from "./LatestReviews";
@@ -12,7 +9,6 @@ import { LatestReview } from "./LatestReviews";
 const Company: FC = () => {
   const navigate = useNavigate();
   const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
 
   return (
     <div>

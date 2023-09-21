@@ -24,7 +24,7 @@ export const UserReview = () => {
 
   useEffect(() => {
     if (!state.company._id) {
-      return navigate("/");
+      return navigate("/companies");
     }
     getUserReview(state.company._id, setUserReview);
   }, [state.company._id]);

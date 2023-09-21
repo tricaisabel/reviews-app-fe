@@ -12,7 +12,7 @@ const StarRating: FC<StarRatingProps> = ({ showText, value }) => {
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
 
   const isClickable = value === undefined;
-  const numberOfStars = isClickable ? state.company.rating : value;
+  const numberOfStars = isClickable ? state.reviewForm.rating : value;
 
   const cursor = isClickable ? "active" : "inactive";
 

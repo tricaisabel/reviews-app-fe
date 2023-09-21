@@ -1,0 +1,21 @@
+.new--review--container{
+    width: 100%;
+    padding: 20px 50px;
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.add--new-review{
+   display: flex;
+   width: 100%;
+   justify-content: center;
+   margin-top:30px
+}
+
+@media screen and (max-width: 1250px) {
+  
+    .new--review--container{
+      padding: 19px;
+    }
+  }
