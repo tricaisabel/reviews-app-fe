@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import "./StarRating.css";
 import { DispatchContext, StateContext } from "../../App";
-import { Action, ActionType } from "../../reducers/action.type";
+import { Action, ActionType } from "../../store/actions";
 
 export interface StarRatingProps {
   showText?: boolean;
@@ -10,8 +10,9 @@ export interface StarRatingProps {
 const StarRating: FC<StarRatingProps> = ({ showText, value }) => {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+
   const isClickable = value === undefined;
-  const numberOfStars = isClickable ? state.rating : value;
+  const numberOfStars = isClickable ? state.company.rating : value;
 
   const cursor = isClickable ? "active" : "inactive";
 

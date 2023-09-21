@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
-import Card, { ICompany } from "../card/Card";
+import { useContext, useEffect } from "react";
+import Card from "../card/Card";
 import "./Companies.css";
 import { getCompanies } from "../../api/company";
 import { useNavigate } from "react-router-dom";
+import { Action, ActionType } from "../../store/actions";
+import { StateContext, DispatchContext } from "../../App";
+import { ICompany } from "../../store/interfaces";
 
 export default function Companies() {
-  const [companies, setCompanies] = useState<ICompany[]>([]);
   const navigate = useNavigate();
+  const state = useContext(StateContext);
+  const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+
+  function setCompanies(companies: ICompany[]) {
+    dispatch({ type: ActionType.SET_COMPANIES, payload: companies });
+  }
 
   useEffect(() => {
-    getCompanies().then((response) => {
-      if (!response.error) {
-        setCompanies(response);
-        console.log(response);
-      } else {
-        navigate("/login");
-      }
-    });
+    getCompanies(setCompanies, navigate);
   }, []);
 
   return (
@@ -27,7 +28,7 @@ export default function Companies() {
       <h1 className="center">Companies</h1>
 
       <div className="companies--list">
-        {companies.map((company) => (
+        {state.companies.map((company: ICompany) => (
           <Card key={company._id} {...company} />
         ))}
       </div>

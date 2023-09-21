@@ -1,34 +1,40 @@
-import { FC, useState } from "react";
+import React, { FC, useContext } from "react";
 import star from "../../assets/logo.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
+import { ICompany } from "../../store/interfaces";
+import { Action, ActionType } from "../../store/actions";
+import { DispatchContext } from "../../App";
 
-export interface ICompany {
-  url: string;
-  averageRating: number;
-  reviewCount: number;
-  name: string;
-  _id: string;
-}
-
-const Card: FC<ICompany> = ({ url, averageRating, reviewCount, name, _id }) => {
+const Card: FC<ICompany> = (company: ICompany) => {
   const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+
+  const newBadge = <div className="card--badge">NEW</div>;
+  const excellentBadge = (
+    <div className="card--badge background_yellow">EXCELLENT</div>
+  );
+
+  function selectCompany() {
+    dispatch({ type: ActionType.SET_COMPANY, payload: company });
+    navigate(`${company._id}`);
+  }
 
   return (
-    <div className="card" onClick={() => navigate(`${_id}`)}>
-      {reviewCount === 0 && <div className="card--badge">NEW</div>}
-      {averageRating >= 4.5 && (
-        <div className="card--badge background_yellow">EXCELLENT</div>
-      )}
+    <div className="card" onClick={selectCompany}>
+      {company.reviewCount === 0 && newBadge}
+      {company.averageRating >= 4.5 && excellentBadge}
+
       <div className="card--image--container">
-        <img src={url} className="card--image" />
+        <img src={company.url} alt={company.name} className="card--image" />
       </div>
+
       <div className="card--stats text">
-        <img src={star} className="card--star" />
-        <span className="bold">{averageRating}</span>
-        <span className="gray">({reviewCount} reviews)</span>
+        <img src={star} alt="star" className="card--star" />
+        <span className="bold">{company.averageRating}</span>
+        <span className="gray">({company.reviewCount} reviews)</span>
       </div>
-      <p className="black small bold">{name}</p>
+      <p className="black small bold">{company.name}</p>
     </div>
   );
 };

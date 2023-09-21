@@ -7,11 +7,12 @@ import Auth, { LOG_IN, SIGN_UP } from "./components/auth/Auth";
 import Company from "./components/company/Company";
 import { Dispatch, createContext, useReducer } from "react";
 import NewReview from "./components/new-review/NewReview";
-import { initialState, reducer, State } from "./reducers/app.reducer";
-import { Action } from "./reducers/action.type";
+import { reducer } from "./store/reducer";
+import { Action } from "./store/actions";
+import { IState } from "./store/interfaces";
+import { initialState } from "./store/intial-state";
 
-
-export const StateContext = createContext<State>(initialState);
+export const StateContext = createContext<IState>(initialState);
 export const DispatchContext = createContext<Dispatch<Action> | undefined>(
   undefined
 );

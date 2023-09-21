@@ -24,3 +24,13 @@
 .header--logout{
     margin-left: 30px;
 }
+
+@media (max-width:1200px){
+    .header--profile{
+        display: none;
+    }
+
+    .header--profile p{
+        margin-left: auto;
+    }
+}

@@ -1,32 +1,35 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import StarRating from "../star-rating/StarRating";
 import { useNavigate } from "react-router-dom";
+import { DispatchContext, StateContext } from "../../App";
+import { Action, ActionType } from "../../store/actions";
 
 interface NewReviewProps {}
 
 const NewReview: FC<NewReviewProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-  });
+  const state = useContext(StateContext);
+  const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
 
   function closeModal() {
     setIsModalOpen(false);
   }
 
-  function openModal() {
+  function openModal(event: any) {
+    event.preventDefault();
     setIsModalOpen(true);
   }
 
-  function updateFormData(event: any) {
+  function updateReviewForm(event: any) {
     const { name, value } = event.target;
-
-    setForm((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    dispatch({
+      type: ActionType.SET_REVIEW_FORM,
+      payload: {
+        name,
+        value,
+      },
+    });
   }
 
   return (
@@ -42,7 +45,7 @@ const NewReview: FC<NewReviewProps> = () => {
           <StarRating showText={true} />
         </div>
 
-        <form onSubmit={openModal}>
+        <form onSubmit={(e) => openModal(e)}>
           <label htmlFor="name">
             <b>Username</b>
           </label>
@@ -50,8 +53,8 @@ const NewReview: FC<NewReviewProps> = () => {
             type="text"
             placeholder="Your name"
             name="name"
-            value={form.name}
-            onChange={updateFormData}
+            value={state.reviewForm.name}
+            onChange={updateReviewForm}
           />
 
           <label htmlFor="description">
@@ -61,8 +64,8 @@ const NewReview: FC<NewReviewProps> = () => {
             type="text"
             placeholder="Add more details on your experience"
             name="description"
-            value={form.description}
-            onChange={updateFormData}
+            value={state.reviewForm.description}
+            onChange={updateReviewForm}
           />
 
           <button className="button_primary background_blue" type="submit">

@@ -1,15 +1,7 @@
 import { FC } from "react";
 import "./Review.css";
 import StarRating from "../star-rating/StarRating";
-
-export interface IReview {
-  _id: string;
-  rating: number;
-  description?: string;
-  name: string;
-  userUrl: string;
-  createdAt: string;
-}
+import { IReview } from "../../store/interfaces";
 
 const Review: FC<IReview> = ({
   _id,

@@ -3,7 +3,7 @@ import "./Auth.css";
 import image from "../../assets/auth-illustration.avif";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../api/auth";
-import { Action, ActionType } from "../../reducers/action.type";
+import { Action, ActionType } from "../../store/actions";
 import { StateContext, DispatchContext } from "../../App";
 
 export const SIGN_UP = "signup";
@@ -54,7 +54,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
   }
 
   function clickLink() {
-    type === SIGN_UP ? navigate("/login") : navigate("/signup");
+    type === SIGN_UP ? navigate(`/${LOG_IN}`) : navigate(`/${SIGN_UP}`);
   }
 
   async function submitNewUser(event: any) {
@@ -70,7 +70,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
   }
 
   return (
-    <div>
+    <>
       <form onSubmit={submitNewUser} className="split--container">
         <img src={image} alt="Auth illustration" className="container--image" />
 
@@ -109,7 +109,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 
