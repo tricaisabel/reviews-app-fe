@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ICompany, IReview } from "../store/interfaces";
+import { ICompany, IReview, IReviewForm } from "../store/interfaces";
 
 export const API = axios.create({
   baseURL: "http://localhost:8080",
@@ -69,6 +69,21 @@ export const getLatestReviews = async (
       if (reviews) setLatestReviews(reviews);
     })
     .catch((error: AxiosError) => {
+      console.log(error.response?.data);
+    });
+};
+
+export const postReviewToCompany = async (
+  companyId: string,
+  requestBody: IReviewForm,
+  showToastMessage: (message: string) => void
+) => {
+  return API.post(`/companies/${companyId}/reviews`, requestBody)
+    .then((response: AxiosResponse) => {
+      showToastMessage(response.data);
+    })
+    .catch((error: AxiosError) => {
+      showToastMessage(error.response?.data as string);
       console.log(error.response?.data);
     });
 };

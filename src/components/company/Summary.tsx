@@ -27,6 +27,7 @@ export const Summary = () => {
           </a>
         )}
       </div>
+      <hr />
     </>
   );
 };

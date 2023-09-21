@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { DispatchContext, StateContext } from "../../App";
 import { Action, ActionType } from "../../store/actions";
 import "./NewReview.css";
+import { postReviewToCompany } from "../../api/company";
 
 interface NewReviewProps {}
 
@@ -13,14 +14,34 @@ const NewReview: FC<NewReviewProps> = () => {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
 
+  const showToastMessage = (message: string) => {
+    dispatch({
+      type: ActionType.SHOW_TOAST,
+      payload: message,
+    });
+
+    setTimeout(() => {
+      dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
+    }, 3000);
+  };
+
   function closeModal() {
     setIsModalOpen(false);
   }
 
-  function openModal(event: any) {
+  function addReview(event: any) {
     event.preventDefault();
-    console.log(state.reviewForm);
-    setIsModalOpen(true);
+    if (state.reviewForm.rating !== -1) {
+      postReviewToCompany(
+        state.company._id,
+        state.reviewForm,
+        showToastMessage
+      );
+      goBackToCompany();
+      setIsModalOpen(true);
+    } else {
+      showToastMessage("You must choose a star rating first");
+    }
   }
 
   function updateReviewForm(event: any) {
@@ -34,11 +55,15 @@ const NewReview: FC<NewReviewProps> = () => {
     });
   }
 
+  function goBackToCompany() {
+    navigate(`/companies/${state.company._id}`);
+  }
+
   return (
     <>
       <div className="new--review--container">
-        <a className="blue previous-btn" onClick={() => navigate("/companies")}>
-          <span className="previous">&#8249;</span> All Companies
+        <a className="blue previous-btn" onClick={goBackToCompany}>
+          <span className="previous">&#8249;</span> Reviews
         </a>
 
         <h1 className="center">Add a review</h1>
@@ -47,7 +72,7 @@ const NewReview: FC<NewReviewProps> = () => {
           <StarRating showText={true} />
         </div>
 
-        <form onSubmit={(e) => openModal(e)}>
+        <form onSubmit={(e) => addReview(e)}>
           <label htmlFor="name">
             <b>Username</b>
           </label>

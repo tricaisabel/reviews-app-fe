@@ -10,7 +10,7 @@ export const initialState: IState = {
   reviewForm: {
     name: "",
     description: "",
-    rating: 0,
+    rating: -1,
   },
   companies: [],
   company: {

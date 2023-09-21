@@ -30,11 +30,7 @@ const Company: FC = () => {
             <h2>Reviews</h2>
 
             <Summary />
-            <hr />
-
             <UserReview />
-            <hr />
-
             <LatestReview />
           </div>
         </>

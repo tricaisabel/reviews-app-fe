@@ -49,6 +49,7 @@ export const UserReview = () => {
           </div>
         </div>
       )}
+      <hr />
     </>
   );
 };
