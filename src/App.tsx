@@ -8,7 +8,7 @@ import Company from "./components/company/Company";
 import { Dispatch, createContext, useReducer } from "react";
 import ReviewForm from "./components/newReview/ReviewForm";
 import { reducer } from "./store/reducer";
-import { Action } from "./store/actions";
+import { Action, ActionType } from "./store/actions";
 import { IState } from "./store/interfaces";
 import { initialState } from "./store/intialState";
 import Toast from "./components/toast/Toast";

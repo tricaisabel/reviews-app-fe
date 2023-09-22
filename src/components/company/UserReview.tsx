@@ -18,41 +18,43 @@ export const UserReview = () => {
 
   return (
     <>
-      <h3>Your Review</h3>
-      {state.company && state.userReview && (
-        <Review review={state.userReview} isUserReview={true} />
+      {state.company && (
+        <>
+          <h3>Your Review</h3>
+          {state.userReview && (
+            <Review review={state.userReview} isUserReview={true} />
+          )}
+
+          {state.userReview && state.userReview.description === "" && (
+            <a
+              className="blue add--description-btn"
+              onClick={() => showReviewForm(true)}
+            >
+              Describe your experience
+            </a>
+          )}
+
+          {state.company && !state.userReview && (
+            <div className="review--container">
+              <img
+                src={USER_IMAGE}
+                alt="Reviewer image"
+                className="profile--image"
+              />
+
+              <div
+                className="review--details"
+                onClick={() => showReviewForm(false)}
+              >
+                <h3>Rate and review</h3>
+                <p className="small">Share your experience to help others.</p>
+                <StarRating />
+              </div>
+            </div>
+          )}
+          <hr />
+        </>
       )}
-
-      {state.company &&
-        state.userReview &&
-        state.userReview.description === "" && (
-          <a
-            className="blue add--description-btn"
-            onClick={() => showReviewForm(true)}
-          >
-            Describe your experience
-          </a>
-        )}
-
-      {state.company && !state.userReview && (
-        <div className="review--container">
-          <img
-            src={USER_IMAGE}
-            alt="Reviewer image"
-            className="profile--image"
-          />
-
-          <div
-            className="review--details"
-            onClick={() => showReviewForm(false)}
-          >
-            <h3>Rate and review</h3>
-            <p className="small">Share your experience to help others.</p>
-            <StarRating />
-          </div>
-        </div>
-      )}
-      <hr />
     </>
   );
 };

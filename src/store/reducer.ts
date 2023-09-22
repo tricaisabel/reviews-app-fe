@@ -2,7 +2,6 @@ import { Action, ActionType } from "./actions";
 import { IState } from "./interfaces";
 
 export function reducer(state: IState, action: Action): IState {
-  console.log({ state, action });
   switch (action.type) {
     case ActionType.SET_RATING: {
       return {
@@ -15,7 +14,6 @@ export function reducer(state: IState, action: Action): IState {
     }
     case ActionType.SET_EMAIL:
     case ActionType.SET_URL:
-    case ActionType.SET_RATING:
       return { ...state, [action.type]: action.payload };
 
     case ActionType.SET_LOGIN_FORM:
@@ -39,10 +37,11 @@ export function reducer(state: IState, action: Action): IState {
         [property]: action.payload,
       };
     }
-    case ActionType.SET_COMPANY: {
+    case ActionType.CHANGE_COMPANY:
       return {
         ...state,
-        company: action.payload,
+        companyId: action.payload,
+        // company: null,
         latestReviews: [],
         userReview: null,
         reviewForm: {
@@ -53,6 +52,11 @@ export function reducer(state: IState, action: Action): IState {
           show: false,
         },
       };
+    case ActionType.SET_COMPANY_DATA: {
+      return {
+        ...state,
+        company: action.payload,
+      };
     }
     case ActionType.SET_LATEST_REVIEWS: {
       return {
@@ -60,34 +64,6 @@ export function reducer(state: IState, action: Action): IState {
         latestReviews: action.payload,
       };
     }
-
-    case ActionType.LOAD_DEFAULT_REVIEWS:
-    case ActionType.LOAD_MORE_REVIEWS: {
-      if (!state.company) return state;
-      const newCount =
-        action.type === ActionType.LOAD_DEFAULT_REVIEWS
-          ? 3
-          : state.company.end + 3;
-      return {
-        ...state,
-        company: {
-          ...state.company,
-          end: newCount,
-        },
-      };
-    }
-
-    case ActionType.LOAD_ALL_REVIEWS: {
-      if (!state.company) return state;
-      return {
-        ...state,
-        company: {
-          ...state.company,
-          end: state.company.reviewCount,
-        },
-      };
-    }
-
     case ActionType.SHOW_TOAST:
       return {
         ...state,
@@ -122,11 +98,6 @@ export function reducer(state: IState, action: Action): IState {
           show: false,
           editMode: false,
         },
-      };
-    case ActionType.SET_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload,
       };
     default:
       return state;

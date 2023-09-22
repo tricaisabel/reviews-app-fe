@@ -17,7 +17,9 @@ export default function Companies() {
   }
 
   useEffect(() => {
-    getCompanies(setCompanies, navigate);
+    getCompanies().then((companies) => {
+      setCompanies(companies);
+    });
   }, []);
 
   return (

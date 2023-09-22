@@ -18,11 +18,11 @@ export const initialState: IState = {
   },
   companies: [],
   company: null,
+  companyId: localStorage.getItem("companyId") ?? null,
   latestReviews: [],
   userReview: null,
   toast: {
     message: "",
     show: false,
   },
-  isLoading: false,
 };

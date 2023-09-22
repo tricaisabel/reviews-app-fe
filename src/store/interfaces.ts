@@ -4,7 +4,6 @@ export interface ICompany {
   reviewCount: number;
   name: string;
   _id: string;
-  end: number;
 }
 
 export interface ILoginForm {
@@ -44,9 +43,9 @@ export interface IState {
   loginForm: ILoginForm;
   reviewForm: IReviewForm;
   companies: ICompany[];
+  companyId: string | null;
   company: ICompany | null;
   latestReviews: IReview[];
   userReview: IReview | null;
   toast: IToast;
-  isLoading: boolean;
 }

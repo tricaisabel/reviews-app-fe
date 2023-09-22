@@ -34,7 +34,14 @@ const ReviewForm: FC = () => {
       goBackToCompany();
       setIsModalOpen(true);
     } else {
-      showToastMessage("You must choose a star rating first");
+      dispatch({
+        type: ActionType.SHOW_TOAST,
+        payload: "You must choose a star rating first",
+      });
+
+      setTimeout(() => {
+        dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
+      }, 3000);
     }
   }
 

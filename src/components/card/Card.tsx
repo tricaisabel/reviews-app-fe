@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 import star from "../../assets/logo.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,8 @@ const Card: FC<ICompany> = (company: ICompany) => {
   );
 
   function selectCompany() {
-    // dispatch({ type: ActionType.SET_COMPANY, payload: company });
+    dispatch({ type: ActionType.CHANGE_COMPANY, payload: company._id });
+    localStorage.setItem("companyId", company._id);
     navigate(`${company._id}`);
   }
 
