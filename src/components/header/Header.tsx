@@ -9,16 +9,16 @@ const Header: FC = () => {
     <header className="header">
       <h3>Company Review</h3>
 
-      {state.url && state.email && (
+      {state.user.url && state.user.email && (
         <>
           <div className="header--profile">
             <img
-              src={state.url}
+              src={state.user.url}
               alt="Profile image"
               className="profile--image"
             />
             <p className="white">
-              {state.email?.slice(0, state.email.indexOf("@"))}
+              {state.user.email?.slice(0, state.user.email.indexOf("@"))}
             </p>
           </div>
 

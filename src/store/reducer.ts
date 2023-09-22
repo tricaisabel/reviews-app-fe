@@ -45,6 +45,13 @@ export function reducer(state: IState, action: Action): IState {
         company: action.payload,
         latestReviews: [],
         userReview: null,
+        reviewForm: {
+          name: "",
+          description: "",
+          rating: -1,
+          editMode: false,
+          show: false,
+        },
       };
     }
     case ActionType.SET_LATEST_REVIEWS: {
@@ -55,19 +62,23 @@ export function reducer(state: IState, action: Action): IState {
     }
 
     case ActionType.LOAD_DEFAULT_REVIEWS:
-    case ActionType.LOAD_MORE_REVIEWS:
+    case ActionType.LOAD_MORE_REVIEWS: {
+      if (!state.company) return state;
+      const newCount =
+        action.type === ActionType.LOAD_DEFAULT_REVIEWS
+          ? 3
+          : state.company.end + 3;
       return {
         ...state,
         company: {
           ...state.company,
-          end:
-            action.type === ActionType.LOAD_DEFAULT_REVIEWS
-              ? 3
-              : state.company.end + 3,
+          end: newCount,
         },
       };
+    }
 
-    case ActionType.LOAD_ALL_REVIEWS:
+    case ActionType.LOAD_ALL_REVIEWS: {
+      if (!state.company) return state;
       return {
         ...state,
         company: {
@@ -75,6 +86,8 @@ export function reducer(state: IState, action: Action): IState {
           end: state.company.reviewCount,
         },
       };
+    }
+
     case ActionType.SHOW_TOAST:
       return {
         ...state,
@@ -90,6 +103,30 @@ export function reducer(state: IState, action: Action): IState {
           show: false,
           message: "",
         },
+      };
+    case ActionType.SHOW_REVIEW_FORM:
+      const newState = { ...state };
+      newState.reviewForm.show = true;
+      newState.reviewForm.editMode = action.payload.editMode;
+      if (action.payload.editMode) {
+        newState.reviewForm.rating = state.userReview?.rating ?? -1;
+        newState.reviewForm.name = state.userReview?.name ?? "";
+        newState.reviewForm.description = state.userReview?.description ?? "";
+      }
+      return newState;
+    case ActionType.HIDE_REVIEW_FORM:
+      return {
+        ...state,
+        reviewForm: {
+          ...state.reviewForm,
+          show: false,
+          editMode: false,
+        },
+      };
+    case ActionType.SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     default:
       return state;

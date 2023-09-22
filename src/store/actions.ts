@@ -39,10 +39,21 @@ export type Action =
       payload: string;
     }
   | {
+      type: typeof ActionType.SET_LOADING;
+      payload: boolean;
+    }
+  | {
       type:
         | typeof ActionType.LOAD_DEFAULT_REVIEWS
         | typeof ActionType.LOAD_ALL_REVIEWS
-        | typeof ActionType.LOAD_MORE_REVIEWS;
+        | typeof ActionType.LOAD_MORE_REVIEWS
+        | typeof ActionType.HIDE_REVIEW_FORM;
+    }
+  | {
+      type: typeof ActionType.SHOW_REVIEW_FORM;
+      payload: {
+        editMode: boolean;
+      };
     };
 
 export enum ActionType {
@@ -60,4 +71,7 @@ export enum ActionType {
   LOAD_ALL_REVIEWS = "LOAD_ALL_REVIEWS",
   SHOW_TOAST = "SHOW_TOAST",
   HIDE_TOAST = "HIDE_TOAST",
+  SHOW_REVIEW_FORM = "SHOW_REVIEW_FORM",
+  HIDE_REVIEW_FORM = "HIDE_REVIEW_FORM",
+  SET_LOADING = "SET_LOADING",
 }

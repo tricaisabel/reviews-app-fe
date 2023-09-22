@@ -4,12 +4,12 @@ import { IReview } from "../../store/interfaces";
 import { Action, ActionType } from "../../store/actions";
 import Review from "../review/Review";
 import { getLatestReviews } from "../../api/company";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export const LatestReview = () => {
   const state = useContext(StateContext);
-  const navigate = useNavigate();
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+  const { companyId } = useParams();
 
   function loadDefaultReviews() {
     dispatch({ type: ActionType.LOAD_DEFAULT_REVIEWS });
@@ -24,37 +24,37 @@ export const LatestReview = () => {
   }
 
   useEffect(() => {
-    if (!state.company._id) {
-      return navigate("/companies");
-    }
-    getLatestReviews(state.company._id, state.company.end, setLatestReviews);
-  }, [state.company.end, state.company._id]);
+    if (!state.company || !companyId) return;
+    getLatestReviews(companyId, state.company.end, setLatestReviews);
+  }, [state.company?.end, companyId]);
 
   return (
     <>
       <h3>Latest Reviews</h3>
-      {state.latestReviews.length !== 0 &&
+      {state.company &&
+        state.latestReviews.length !== 0 &&
         state.latestReviews.map((review: IReview, index: number) => (
           <div key={review._id}>
             {index !== 0 && <hr />}
-            <Review {...review} />
+            <Review review={review} />
           </div>
         ))}
 
-      {state.company.end < state.company.reviewCount && (
+      {state.company && state.company.end < state.company.reviewCount && (
         <a className="blue bold center" onClick={loadMoreReviews}>
           Load more reviews
         </a>
       )}
 
-      {state.company.end >= state.company.reviewCount &&
+      {state.company &&
+        state.company.end >= state.company.reviewCount &&
         state.latestReviews.length > 0 && (
           <a className="blue bold center" onClick={loadDefaultReviews}>
             Show top review
           </a>
         )}
 
-      {state.company.reviewCount == 0 && (
+      {state.company && state.company.reviewCount == 0 && (
         <p className="small">No reviews yet. You can be our first reviewer.</p>
       )}
     </>

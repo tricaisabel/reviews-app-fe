@@ -1,16 +1,18 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import "./Review.css";
 import StarRating from "../star-rating/StarRating";
 import { IReview } from "../../store/interfaces";
+import { useNavigate } from "react-router-dom";
+import { StateContext } from "../../App";
 
-const Review: FC<IReview> = ({
-  _id,
-  rating,
-  description,
-  name,
-  userUrl,
-  createdAt,
-}) => {
+interface ReviewProps {
+  review: IReview;
+  isUserReview?: boolean;
+}
+const Review: FC<ReviewProps> = ({ review, isUserReview = false }) => {
+  const state = useContext(StateContext);
+  const navigate = useNavigate();
+
   function timeAgo(dateString: string): string {
     const currentDate = new Date();
     const date = new Date(dateString);
@@ -34,22 +36,22 @@ const Review: FC<IReview> = ({
 
   return (
     <div className="review--container">
-      <img src={userUrl} alt="Reviewer image" className="profile--image" />
+      <img
+        src={review.userUrl}
+        alt="Reviewer image"
+        className="profile--image"
+      />
 
       <div className="review--details">
-        <h3 className="review--name">{name}</h3>
+        <h3 className="review--name">{review.name}</h3>
 
         <div className="review--rating">
-          <StarRating value={rating} />
-          <p className="small">{timeAgo(createdAt)}</p>
+          <StarRating value={review.rating} />
+          <p className="small">{timeAgo(review.createdAt)}</p>
         </div>
 
-        {description ? (
-          <p className="review--description">{description}</p>
-        ) : (
-          <a href="#" className="blue">
-            Describe your experience
-          </a>
+        {review.description && (
+          <p className="review--description">{review.description}</p>
         )}
       </div>
     </div>

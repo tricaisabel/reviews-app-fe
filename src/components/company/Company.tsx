@@ -1,18 +1,40 @@
-import { FC, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Company.css";
-import { StateContext } from "../../App";
+import { DispatchContext, StateContext } from "../../App";
 import { Summary } from "./Summary";
 import { UserReview } from "./UserReview";
 import { LatestReview } from "./LatestReviews";
+import ReviewForm from "../newReview/ReviewForm";
+import { getCompany, getUserReview } from "../../api/company";
+import { Action, ActionType } from "../../store/actions";
+import { ICompany, IReview } from "../../store/interfaces";
 
 const Company: FC = () => {
   const navigate = useNavigate();
   const state = useContext(StateContext);
+  const { companyId } = useParams();
+  const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+
+  function setCompany(company: ICompany) {
+    dispatch({ type: ActionType.SET_COMPANY, payload: company });
+  }
+
+  function setUserReview(review: IReview) {
+    dispatch({ type: ActionType.SET_USER_REVIEW, payload: review });
+  }
+
+  useEffect(() => {
+    if (!companyId) {
+      return navigate("/companies");
+    }
+    getCompany(companyId, setCompany);
+    getUserReview(companyId, setUserReview);
+  }, [companyId]);
 
   return (
     <div>
-      {state.company && (
+      {state.company && !state.reviewForm.show && (
         <>
           <img
             src={state.company.url}
@@ -35,6 +57,7 @@ const Company: FC = () => {
           </div>
         </>
       )}
+      <ReviewForm />
     </div>
   );
 };

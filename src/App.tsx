@@ -6,7 +6,7 @@ import Companies from "./components/companies/Companies";
 import Auth, { LOG_IN, SIGN_UP } from "./components/auth/Auth";
 import Company from "./components/company/Company";
 import { Dispatch, createContext, useReducer } from "react";
-import NewReview from "./components/newReview/NewReview";
+import ReviewForm from "./components/newReview/ReviewForm";
 import { reducer } from "./store/reducer";
 import { Action } from "./store/actions";
 import { IState } from "./store/interfaces";
@@ -35,10 +35,6 @@ function App() {
                 <Route path="login" element={<Auth type={LOG_IN} />} />
                 <Route path="companies" element={<Companies />} />
                 <Route path="companies/:companyId" element={<Company />} />
-                <Route
-                  path="companies/:companyId/new"
-                  element={<NewReview />}
-                />
               </Routes>
             </BrowserRouter>
             <Toast />

@@ -16,6 +16,8 @@ export interface IReviewForm {
   name: string;
   description: string;
   rating: number;
+  editMode: boolean;
+  show: boolean;
 }
 
 export interface IToast {
@@ -32,14 +34,19 @@ export interface IReview {
   createdAt: string;
 }
 
-export interface IState {
+export interface ICurrentUser {
   email: string;
   url: string;
+}
+
+export interface IState {
+  user: ICurrentUser;
   loginForm: ILoginForm;
   reviewForm: IReviewForm;
   companies: ICompany[];
-  company: ICompany;
+  company: ICompany | null;
   latestReviews: IReview[];
   userReview: IReview | null;
   toast: IToast;
+  isLoading: boolean;
 }

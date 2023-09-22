@@ -16,7 +16,7 @@ const Card: FC<ICompany> = (company: ICompany) => {
   );
 
   function selectCompany() {
-    dispatch({ type: ActionType.SET_COMPANY, payload: company });
+    // dispatch({ type: ActionType.SET_COMPANY, payload: company });
     navigate(`${company._id}`);
   }
 
@@ -32,7 +32,9 @@ const Card: FC<ICompany> = (company: ICompany) => {
       <div className="card--stats text">
         <img src={star} alt="star" className="card--star" />
         <span className="bold">{company.averageRating}</span>
-        <span className="gray">({company.reviewCount} reviews)</span>
+        <span className="gray">
+          ({company.reviewCount} review {company.reviewCount !== 1 && "s"})
+        </span>
       </div>
       <p className="black small bold">{company.name}</p>
     </div>
