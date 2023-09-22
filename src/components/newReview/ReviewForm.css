@@ -44,3 +44,10 @@
   .modal--title{
     margin: 30px 0px;
   }
+
+
+  .disabled{
+    pointer-events: none;
+    background-color: #eaeaea;
+    color: gray
+  }

@@ -61,6 +61,26 @@ export const postReviewToCompany = async (
   return API.post(`/companies/${companyId}/reviews`, requestBody)
     .then((response: AxiosResponse) => {
       const { review } = response?.data;
+      showToastMessage("Your review was added");
+      return review ?? null;
+    })
+    .catch((error: AxiosError) => {
+      showToastMessage(error.response?.data as string);
+    });
+};
+
+export const updateReviewDescription = async (
+  companyId: string,
+  reviewId: string,
+  description: string,
+  showToastMessage: (message: string) => void
+) => {
+  return API.patch(`/companies/${companyId}/reviews/${reviewId}`, {
+    description,
+  })
+    .then((response: AxiosResponse) => {
+      const { review } = response?.data;
+      showToastMessage("Your review description was updated");
       return review ?? null;
     })
     .catch((error: AxiosError) => {

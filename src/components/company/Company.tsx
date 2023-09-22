@@ -41,17 +41,15 @@ const Company: FC = () => {
     if (!state.companyId) {
       return navigate("/companies");
     }
-    getCompany(state.companyId).then((company) => setCompany(company));
     getUserReview(state.companyId).then((review) => setUserReview(review));
   }, []);
 
-  // useEffect(() => {
-  //   if (!state.companyId) {
-  //     return navigate("/companies");
-  //   }
-
-  //   console.log(state.userReview);
-  // }, [state.reviewForm.show]);
+  useEffect(() => {
+    if (!state.companyId) {
+      return navigate("/companies");
+    }
+    getCompany(state.companyId).then((company) => setCompany(company));
+  }, [state.userReview]);
 
   useEffect(() => {
     if (!state.companyId) {

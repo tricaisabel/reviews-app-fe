@@ -1,16 +1,27 @@
 import { FC, useContext, useState } from "react";
 import StarRating from "../star-rating/StarRating";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { DispatchContext, StateContext } from "../../App";
 import { Action, ActionType } from "../../store/actions";
 import "./ReviewForm.css";
-import { postReviewToCompany } from "../../api/company";
+import {
+  postReviewToCompany,
+  updateReviewDescription,
+} from "../../api/company";
 
 const ReviewForm: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { companyId } = useParams();
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+  const title = `${
+    state.reviewForm.editMode ? "Edit your" : "Add a"
+  } review at ${state.company?.name}`;
+
+  //Move forms locally
+  //Make stars disabled but set them
+  //Anonymous
+  //update description of state
 
   const showToastMessage = (message: string) => {
     dispatch({
@@ -25,14 +36,17 @@ const ReviewForm: FC = () => {
 
   function closeModal() {
     setIsModalOpen(false);
+    goBackToCompany();
   }
 
-  function addReview(event: any) {
-    event.preventDefault();
-    if (state.reviewForm.rating !== -1) {
-      postReviewToCompany(companyId ?? "", state.reviewForm, showToastMessage);
-      goBackToCompany();
-      setIsModalOpen(true);
+  function addReview() {
+    if (state.reviewForm.rating !== -1 && companyId) {
+      postReviewToCompany(companyId, state.reviewForm, showToastMessage).then(
+        (review) => {
+          dispatch({ type: ActionType.SET_USER_REVIEW, payload: review });
+          setIsModalOpen(true);
+        }
+      );
     } else {
       dispatch({
         type: ActionType.SHOW_TOAST,
@@ -43,6 +57,41 @@ const ReviewForm: FC = () => {
         dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
       }, 3000);
     }
+  }
+
+  function editReview() {
+    console.log(state);
+    //not always user review id is ok
+    if (
+      state.reviewForm.description !== "" &&
+      state.userReview?._id &&
+      companyId
+    ) {
+      updateReviewDescription(
+        companyId,
+        state.userReview?._id,
+        state.reviewForm.description,
+        showToastMessage
+      ).then((review) => {
+        dispatch({ type: ActionType.SET_USER_REVIEW, payload: review });
+        console.log(state);
+        setIsModalOpen(true);
+      });
+    } else {
+      dispatch({
+        type: ActionType.SHOW_TOAST,
+        payload: "Please enter a description",
+      });
+
+      setTimeout(() => {
+        dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
+      }, 3000);
+    }
+  }
+
+  function submit(event: any) {
+    event.preventDefault();
+    state.reviewForm.editMode ? editReview() : addReview();
   }
 
   function updateReviewForm(event: any) {
@@ -68,18 +117,15 @@ const ReviewForm: FC = () => {
             <span className="previous">&#8249;</span> Reviews
           </a>
 
-          <h1 className="center">
-            Review {state.company.name} (
-            {state.reviewForm.editMode ? "edit" : "add"})
-          </h1>
+          <h1 className="center">{title}</h1>
 
           <div className="center">
             <StarRating showText={true} />
           </div>
 
-          <form onSubmit={(e) => addReview(e)}>
+          <form onSubmit={(e) => submit(e)}>
             <label htmlFor="name">
-              <b>Username</b>
+              <b>Name</b>
             </label>
             <input
               type="text"
@@ -87,6 +133,7 @@ const ReviewForm: FC = () => {
               name="name"
               value={state.reviewForm.name}
               onChange={updateReviewForm}
+              className={state.reviewForm.editMode ? "disabled" : ""}
             />
 
             <label htmlFor="description">

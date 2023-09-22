@@ -41,7 +41,6 @@ export function reducer(state: IState, action: Action): IState {
       return {
         ...state,
         companyId: action.payload,
-        // company: null,
         latestReviews: [],
         userReview: null,
         reviewForm: {
