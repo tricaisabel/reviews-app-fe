@@ -1,6 +1,5 @@
 import { FC, useContext, useState } from "react";
 import StarRating from "../star-rating/StarRating";
-import { useParams } from "react-router-dom";
 import { DispatchContext, StateContext } from "../../App";
 import { Action, ActionType } from "../../store/actions";
 import "./ReviewForm.css";

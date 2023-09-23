@@ -4,7 +4,7 @@ import "./Company.css";
 import { DispatchContext, StateContext } from "../../App";
 import { Summary } from "./Summary";
 import { UserReview } from "./UserReview";
-import ReviewForm from "../newReview/ReviewForm";
+import ReviewForm from "../review-form/ReviewForm";
 import { getCompany, getLatestReviews, getUserReview } from "../../api/company";
 import { Action, ActionType } from "../../store/actions";
 import { ICompany, IReview } from "../../store/state.interface";
