@@ -11,12 +11,12 @@ export const auth = async (
 ) => {
   return API.post(`/auth/${type}`, requestBody)
     .then((response: AxiosResponse) => {
-      const { email, url } = response.data;
-      if (email && url) {
-        setEmail(email);
-        setUrl(url);
-        localStorage.setItem("email", email);
-        localStorage.setItem("url", url);
+      const { user } = response.data;
+      if (user) {
+        setEmail(user.email);
+        setUrl(user.url);
+        localStorage.setItem("email", user.email);
+        localStorage.setItem("url", user.url);
         navigate("/companies");
       }
     })

@@ -14,7 +14,7 @@ export type Action =
         | typeof ActionType.SET_REVIEW_FORM;
       payload: {
         name: string;
-        value: string;
+        value: string | number;
       };
     }
   | {
@@ -36,6 +36,10 @@ export type Action =
   | {
       type: typeof ActionType.SET_USER_REVIEW;
       payload: IReview;
+    }
+  | {
+      type: typeof ActionType.SET_USER_REVIEW_DESCRIPTION;
+      payload: string;
     }
   | {
       type: typeof ActionType.SHOW_TOAST | typeof ActionType.HIDE_TOAST;
@@ -66,4 +70,5 @@ export enum ActionType {
   HIDE_TOAST = "HIDE_TOAST",
   SHOW_REVIEW_FORM = "SHOW_REVIEW_FORM",
   HIDE_REVIEW_FORM = "HIDE_REVIEW_FORM",
+  SET_USER_REVIEW_DESCRIPTION = "SET_USER_REVIEW_DESCRIPTION",
 }

@@ -37,6 +37,16 @@ export function reducer(state: IState, action: Action): IState {
         [property]: action.payload,
       };
     }
+    case ActionType.SET_USER_REVIEW_DESCRIPTION: {
+      if (!state.userReview) return state;
+      return {
+        ...state,
+        userReview: {
+          ...state.userReview,
+          description: action.payload,
+        },
+      };
+    }
     case ActionType.CHANGE_COMPANY:
       return {
         ...state,

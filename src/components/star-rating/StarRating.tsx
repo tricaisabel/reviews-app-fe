@@ -1,27 +1,34 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import "./StarRating.css";
-import { DispatchContext, StateContext } from "../../App";
-import { Action, ActionType } from "../../store/actions";
 
 export interface StarRatingProps {
   showText?: boolean;
-  value?: number;
+  numberOfStars?: number;
+  onClick?: (value: number) => void;
+  size: "big" | "small";
+  disabled?: boolean;
 }
-const StarRating: FC<StarRatingProps> = ({ showText, value }) => {
-  const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
-
-  const isClickable = value === undefined;
-  const numberOfStars = isClickable ? state.reviewForm.rating : value;
-
-  const cursor = isClickable ? "active" : "inactive";
-
-  function setRating(rating: number) {
-    dispatch({ type: ActionType.SET_RATING, payload: rating });
-  }
+const StarRating: FC<StarRatingProps> = ({
+  showText,
+  numberOfStars = -1,
+  onClick,
+  size,
+  disabled = false,
+}) => {
+  const cursor = onClick && !disabled ? "active" : "inactive";
 
   function clickStar(index: number) {
-    isClickable && setRating(index + 1);
+    onClick && onClick(index + 1);
+  }
+
+  function getClasses(index: number) {
+    let color = "";
+    if (index < numberOfStars) {
+      color = disabled ? " dark_grey" : " yellow";
+    } else {
+      color = "light_grey";
+    }
+    return `${size} ${cursor} ${color}`;
   }
 
   function textRating(rating: number) {
@@ -44,11 +51,11 @@ const StarRating: FC<StarRatingProps> = ({ showText, value }) => {
   return (
     <div className="star-rating">
       <div>
-        {[...Array(5)].map((star, index) => (
+        {[...Array(5)].map((_, index) => (
           <button
             type="button"
             key={index}
-            className={index < numberOfStars ? "on" : "off"}
+            className={getClasses(index)}
             onClick={() => clickStar(index)}
           >
             <span className={`star ${cursor}`}>&#9733;</span>

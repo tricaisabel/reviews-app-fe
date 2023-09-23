@@ -16,6 +16,16 @@ export const UserReview = () => {
     dispatch({ type: ActionType.SHOW_REVIEW_FORM, payload: { editMode } });
   }
 
+  function setRating(value: number) {
+    dispatch({
+      type: ActionType.SET_REVIEW_FORM,
+      payload: {
+        name: "rating",
+        value,
+      },
+    });
+  }
+
   return (
     <>
       {state.company && (
@@ -48,7 +58,7 @@ export const UserReview = () => {
               >
                 <h3>Rate and review</h3>
                 <p className="small">Share your experience to help others.</p>
-                <StarRating />
+                <StarRating size={"big"} onClick={setRating} />
               </div>
             </div>
           )}

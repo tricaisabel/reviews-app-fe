@@ -78,7 +78,9 @@ const Company: FC = () => {
             <h1 className="center">{state.company.name}</h1>
             <h2>Reviews</h2>
 
-            <Summary />
+            <Summary
+              viewAllReviews={() => setEnd(state.company?.reviewCount ?? 0)}
+            />
             <UserReview />
 
             <h3>Latest Reviews</h3>

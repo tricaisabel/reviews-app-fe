@@ -1,7 +1,10 @@
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import { StateContext } from "../../App";
 
-export const Summary = () => {
+interface SummaryProps {
+  viewAllReviews: () => void;
+}
+export const Summary: FC<SummaryProps> = ({ viewAllReviews }) => {
   const state = useContext(StateContext);
 
   return (
@@ -19,7 +22,9 @@ export const Summary = () => {
             </p>
 
             {state.latestReviews.length > 0 && state.company && (
-              <a className="blue right">View all reviews</a>
+              <a className="blue right" onClick={viewAllReviews}>
+                View all reviews
+              </a>
             )}
           </div>
           <hr />

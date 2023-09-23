@@ -18,11 +18,6 @@ const ReviewForm: FC = () => {
     state.reviewForm.editMode ? "Edit your" : "Add a"
   } review at ${state.company?.name}`;
 
-  //Move forms locally
-  //Make stars disabled but set them
-  //Anonymous
-  //update description of state
-
   const showToastMessage = (message: string) => {
     dispatch({
       type: ActionType.SHOW_TOAST,
@@ -60,8 +55,6 @@ const ReviewForm: FC = () => {
   }
 
   function editReview() {
-    console.log(state);
-    //not always user review id is ok
     if (
       state.reviewForm.description !== "" &&
       state.userReview?._id &&
@@ -72,9 +65,11 @@ const ReviewForm: FC = () => {
         state.userReview?._id,
         state.reviewForm.description,
         showToastMessage
-      ).then((review) => {
-        dispatch({ type: ActionType.SET_USER_REVIEW, payload: review });
-        console.log(state);
+      ).then(() => {
+        dispatch({
+          type: ActionType.SET_USER_REVIEW_DESCRIPTION,
+          payload: state.reviewForm.description,
+        });
         setIsModalOpen(true);
       });
     } else {
@@ -105,6 +100,17 @@ const ReviewForm: FC = () => {
     });
   }
 
+  function setRating(value: number) {
+    if (state.reviewForm.editMode) return undefined;
+    return dispatch({
+      type: ActionType.SET_REVIEW_FORM,
+      payload: {
+        name: "rating",
+        value,
+      },
+    });
+  }
+
   function goBackToCompany() {
     dispatch({ type: ActionType.HIDE_REVIEW_FORM });
   }
@@ -120,7 +126,13 @@ const ReviewForm: FC = () => {
           <h1 className="center">{title}</h1>
 
           <div className="center">
-            <StarRating showText={true} />
+            <StarRating
+              showText={true}
+              size={"big"}
+              numberOfStars={state.reviewForm?.rating}
+              onClick={setRating}
+              disabled={state.reviewForm.editMode}
+            />
           </div>
 
           <form onSubmit={(e) => submit(e)}>

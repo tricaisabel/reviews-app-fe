@@ -18,10 +18,14 @@ const Review: FC<ReviewProps> = ({ review, isUserReview = false }) => {
     const date = new Date(dateString);
 
     const timeDifference = currentDate.getTime() - date.getTime();
-    const minutes = Math.floor(timeDifference / (1000 * 60));
+    let minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const weeks = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 7));
+
+    if (isNaN(weeks)) {
+      minutes = 0;
+    }
 
     if (minutes < 60) {
       return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
@@ -46,7 +50,7 @@ const Review: FC<ReviewProps> = ({ review, isUserReview = false }) => {
         <h3 className="review--name">{review.name}</h3>
 
         <div className="review--rating">
-          <StarRating value={review.rating} />
+          <StarRating numberOfStars={review.rating} size={"small"} />
           <p className="small">{timeAgo(review.createdAt)}</p>
         </div>
 

@@ -14,11 +14,15 @@
   align-items: center;
 }
 
-.on {
+.yellow {
   color: #fac402;
 }
 
-.off {
+.dark_grey{
+  color: #565348;
+}
+
+.light_grey {
   color: #ccc;
 }
 
@@ -27,13 +31,16 @@
 }
 
 .active{
-  font-size: 3em;
-  padding:10px;
   cursor:pointer;
 }
 
 .inactive{
   cursor: default;
+}
+
+.big{
+  font-size: 3em;
+  padding:10px;
 }
 
 
