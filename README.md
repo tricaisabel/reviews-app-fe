@@ -5,7 +5,7 @@
 - `cd reviews-app-fe`
 - `npm install`
 
-## Start the back-end server
+## Start the front-end application
 - `npm run dev`
 
 - This command will start the application on http://localhost:5000
