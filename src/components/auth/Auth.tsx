@@ -1,6 +1,5 @@
-import { FC, useContext } from "react";
-import "./Auth.css";
-import image from "../../assets/auth-illustration.avif";
+import { FC, useContext, useRef } from "react";
+import image from "../../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../api/auth";
 import { Action, ActionType } from "../../store/actions";
@@ -18,6 +17,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
   const text = type === SIGN_UP ? "Sign Up" : "Log In";
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+  const repeatPasswordInput = useRef<HTMLInputElement | null>(null);
 
   function setEmail(email: string) {
     dispatch({ type: ActionType.SET_EMAIL, payload: email });
@@ -34,7 +34,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
     });
 
     setTimeout(() => {
-      dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
+      dispatch({ type: ActionType.HIDE_TOAST });
     }, 3000);
   };
 
@@ -70,6 +70,12 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
 
   async function submitNewUser(event: any) {
     event.preventDefault();
+    if (
+      type === SIGN_UP &&
+      state.loginForm.password !== repeatPasswordInput.current?.value
+    ) {
+      return showToastMessage("Passwords do not match.");
+    }
     await auth(
       state.loginForm,
       type,
@@ -88,7 +94,7 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
         <div className="container--info">
           <h1 className="center">{text}</h1>
           <label htmlFor="email">
-            <b>Username</b>
+            <b>Email</b>
           </label>
           <input
             type="email"
@@ -111,7 +117,24 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
             onChange={setLoginForm}
           />
 
-          <a onClick={clickLink}>{getLinkText()}</a>
+          {type === SIGN_UP && (
+            <>
+              <label htmlFor="repeat">
+                <b>Repeat Password</b>
+              </label>
+              <input
+                type="password"
+                placeholder="Repeat Password"
+                name="repeat"
+                required
+                onChange={setLoginForm}
+                ref={repeatPasswordInput}
+              />
+            </>
+          )}
+          <a className="blue" onClick={clickLink}>
+            {getLinkText()}
+          </a>
 
           <br />
           <br />

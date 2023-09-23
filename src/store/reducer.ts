@@ -1,5 +1,5 @@
 import { Action, ActionType } from "./actions";
-import { IState } from "./interfaces";
+import { IState } from "./state.interface";
 
 export function reducer(state: IState, action: Action): IState {
   switch (action.type) {
@@ -13,8 +13,15 @@ export function reducer(state: IState, action: Action): IState {
       };
     }
     case ActionType.SET_EMAIL:
+      return {
+        ...state,
+        user: { ...state.user, email: action.payload },
+      };
     case ActionType.SET_URL:
-      return { ...state, [action.type]: action.payload };
+      return {
+        ...state,
+        user: { ...state.user, url: action.payload },
+      };
 
     case ActionType.SET_LOGIN_FORM:
     case ActionType.SET_REVIEW_FORM: {

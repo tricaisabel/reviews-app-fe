@@ -1,9 +1,12 @@
-import { IState } from "./interfaces";
+import { IState } from "./state.interface";
+
+export const USER_IMAGE =
+  "https://firebasestorage.googleapis.com/v0/b/reviews-app-9ff65.appspot.com/o/users%2Fanonymous-avatar-icon-25.jpg?alt=media&token=bd1f7e5b-b1bf-4411-b649-f3b542a0a005";
 
 export const initialState: IState = {
   user: {
     email: localStorage.getItem("email") ?? "",
-    url: localStorage.getItem("url") ?? "",
+    url: localStorage.getItem("url") ?? USER_IMAGE,
   },
   loginForm: {
     email: "",

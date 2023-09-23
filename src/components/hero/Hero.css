@@ -3,7 +3,7 @@
     align-self: center;
 }
 
-.container{
+.hero--container{
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -30,7 +30,7 @@
     align-items: center;
 }
 
-.secondary{
+.hero--secondary{
     font-size: 20px;
     justify-self: center;
 }
@@ -44,11 +44,11 @@
         width: 100%;
     }
 
-    .secondary, .primary{
+    .hero--secondary, .hero--primary{
         margin-left: 15px;
     }
 
-    .primary{
+    .hero--primary{
         font-size:20px;
         margin-left:0px;
     }

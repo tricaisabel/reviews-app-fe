@@ -1,13 +1,22 @@
 import { FC } from "react";
 import "./StarRating.css";
 
+const RatingText: Record<number, string> = {
+  1: "I hated it",
+  2: "I didn't like it",
+  3: "It was OK",
+  4: "I liked it",
+  5: "I loved it",
+};
+
 export interface StarRatingProps {
-  showText?: boolean;
-  numberOfStars?: number;
-  onClick?: (value: number) => void;
-  size: "big" | "small";
-  disabled?: boolean;
+  showText?: boolean; // displays the corresponding text of the selected rating
+  numberOfStars?: number; // default value of selected stars
+  onClick?: (value: number) => void; // handle function for clicking a star
+  size: "big" | "small"; // size of the stars
+  disabled?: boolean; // makes the control disabled
 }
+
 const StarRating: FC<StarRatingProps> = ({
   showText,
   numberOfStars = -1,
@@ -21,7 +30,7 @@ const StarRating: FC<StarRatingProps> = ({
     onClick && onClick(index + 1);
   }
 
-  function getClasses(index: number) {
+  function getClass(index: number) {
     let color = "";
     if (index < numberOfStars) {
       color = disabled ? " dark_grey" : " yellow";
@@ -31,21 +40,8 @@ const StarRating: FC<StarRatingProps> = ({
     return `${size} ${cursor} ${color}`;
   }
 
-  function textRating(rating: number) {
-    switch (rating) {
-      case 1:
-        return "I wouldn't recommend to anyone";
-      case 2:
-        return "Overall bad experience";
-      case 3:
-        return "Average experience";
-      case 4:
-        return "Pleasant experience";
-      case 5:
-        return "I would recommend to everyone to visit";
-      default:
-        return;
-    }
+  function textRating(rating: number): string {
+    return RatingText[rating];
   }
 
   return (
@@ -55,7 +51,7 @@ const StarRating: FC<StarRatingProps> = ({
           <button
             type="button"
             key={index}
-            className={getClasses(index)}
+            className={getClass(index)}
             onClick={() => clickStar(index)}
           >
             <span className={`star ${cursor}`}>&#9733;</span>

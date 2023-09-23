@@ -6,10 +6,9 @@ import Companies from "./components/companies/Companies";
 import Auth, { LOG_IN, SIGN_UP } from "./components/auth/Auth";
 import Company from "./components/company/Company";
 import { Dispatch, createContext, useReducer } from "react";
-import ReviewForm from "./components/newReview/ReviewForm";
 import { reducer } from "./store/reducer";
-import { Action, ActionType } from "./store/actions";
-import { IState } from "./store/interfaces";
+import { Action } from "./store/actions";
+import { IState } from "./store/state.interface";
 import { initialState } from "./store/intialState";
 import Toast from "./components/toast/Toast";
 

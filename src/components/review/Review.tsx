@@ -1,23 +1,18 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import "./Review.css";
 import StarRating from "../star-rating/StarRating";
-import { IReview } from "../../store/interfaces";
-import { useNavigate } from "react-router-dom";
-import { StateContext } from "../../App";
+import { IReview } from "../../store/state.interface";
 
 interface ReviewProps {
   review: IReview;
-  isUserReview?: boolean;
 }
-const Review: FC<ReviewProps> = ({ review, isUserReview = false }) => {
-  const state = useContext(StateContext);
-  const navigate = useNavigate();
 
+const Review: FC<ReviewProps> = ({ review }) => {
   function timeAgo(dateString: string): string {
     const currentDate = new Date();
     const date = new Date(dateString);
-
     const timeDifference = currentDate.getTime() - date.getTime();
+
     let minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -47,7 +42,9 @@ const Review: FC<ReviewProps> = ({ review, isUserReview = false }) => {
       />
 
       <div className="review--details">
-        <h3 className="review--name">{review.name}</h3>
+        <h3 className="review--name">
+          {review.name === "" ? "Anonymous" : review.name}
+        </h3>
 
         <div className="review--rating">
           <StarRating numberOfStars={review.rating} size={"small"} />

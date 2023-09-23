@@ -5,11 +5,12 @@ import { StateContext } from "../../App";
 
 const Header: FC = () => {
   const state = useContext(StateContext);
+  console.log(state.user.url);
   return (
     <header className="header">
       <h3>Company Review</h3>
 
-      {state.user.url && state.user.email && (
+      {state.user && (
         <>
           <div className="header--profile">
             <img
@@ -17,6 +18,7 @@ const Header: FC = () => {
               alt="Profile image"
               className="profile--image"
             />
+
             <p className="white">
               {state.user.email?.slice(0, state.user.email.indexOf("@"))}
             </p>

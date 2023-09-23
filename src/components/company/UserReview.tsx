@@ -4,13 +4,11 @@ import Review from "../review/Review";
 import StarRating from "../star-rating/StarRating";
 import { Action, ActionType } from "../../store/actions";
 import "./Company.css";
+import { USER_IMAGE } from "../../store/intialState";
 
 export const UserReview = () => {
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
-
-  const USER_IMAGE =
-    "https://firebasestorage.googleapis.com/v0/b/reviews-app-9ff65.appspot.com/o/users%2Fanonymous-avatar-icon-25.jpg?alt=media&token=bd1f7e5b-b1bf-4411-b649-f3b542a0a005";
 
   function showReviewForm(editMode: boolean) {
     dispatch({ type: ActionType.SHOW_REVIEW_FORM, payload: { editMode } });
@@ -31,9 +29,7 @@ export const UserReview = () => {
       {state.company && (
         <>
           <h3>Your Review</h3>
-          {state.userReview && (
-            <Review review={state.userReview} isUserReview={true} />
-          )}
+          {state.userReview && <Review review={state.userReview} />}
 
           {state.userReview && state.userReview.description === "" && (
             <a
@@ -52,13 +48,12 @@ export const UserReview = () => {
                 className="profile--image"
               />
 
-              <div
-                className="review--details"
-                onClick={() => showReviewForm(false)}
-              >
+              <div className="review--details">
                 <h3>Rate and review</h3>
                 <p className="small">Share your experience to help others.</p>
-                <StarRating size={"big"} onClick={setRating} />
+                <div onClick={() => showReviewForm(false)}>
+                  <StarRating size={"big"} onClick={setRating} />
+                </div>
               </div>
             </div>
           )}

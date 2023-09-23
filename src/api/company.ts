@@ -1,30 +1,39 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ICompany, IReview, IReviewForm } from "../store/interfaces";
+import { ICompany, IReview, IReviewForm } from "../store/state.interface";
 
 export const API = axios.create({
   baseURL: "http://localhost:8080",
   withCredentials: true,
 });
 
-export const getCompanies = async () => {
+export const getCompanies = async (
+  showToastMessage: (text: string) => void,
+  navigate: (path: string) => void
+) => {
   return API.get<ICompany[]>("/companies")
     .then((response: AxiosResponse) => {
       const { companies } = response.data;
-      return companies ?? null;
+      return companies ?? [];
     })
     .catch((error: AxiosError) => {
-      console.log(error.response?.data);
+      showToastMessage(error.response?.data as string);
+      navigate("/login");
     });
 };
 
-export const getCompany = async (companyId: string) => {
+export const getCompany = async (
+  companyId: string,
+  showToastMessage: (text: string) => void,
+  navigate: (path: string) => void
+) => {
   return API.get<ICompany>(`/companies/${companyId}`)
     .then((response: AxiosResponse) => {
       const { company } = response.data;
       return company ?? null;
     })
     .catch((error: AxiosError) => {
-      console.log(error.response?.data);
+      showToastMessage(error.response?.data as string);
+      navigate("/login");
     });
 };
 

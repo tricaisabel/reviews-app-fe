@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import star from "../../assets/logo.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
-import { ICompany } from "../../store/interfaces";
+import { ICompany } from "../../store/state.interface";
 import { Action, ActionType } from "../../store/actions";
 import { DispatchContext } from "../../App";
 
@@ -34,7 +34,7 @@ const Card: FC<ICompany> = (company: ICompany) => {
         <img src={star} alt="star" className="card--star" />
         <span className="bold">{company.averageRating}</span>
         <span className="gray">
-          ({company.reviewCount} review {company.reviewCount !== 1 && "s"})
+          ({company.reviewCount} review{company.reviewCount !== 1 && "s"})
         </span>
       </div>
       <p className="black small bold">{company.name}</p>

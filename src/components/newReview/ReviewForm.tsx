@@ -8,12 +8,13 @@ import {
   postReviewToCompany,
   updateReviewDescription,
 } from "../../api/company";
+import { IReview } from "../../store/state.interface";
 
 const ReviewForm: FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { companyId } = useParams();
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const title = `${
     state.reviewForm.editMode ? "Edit your" : "Add a"
   } review at ${state.company?.name}`;
@@ -25,9 +26,34 @@ const ReviewForm: FC = () => {
     });
 
     setTimeout(() => {
-      dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
+      dispatch({ type: ActionType.HIDE_TOAST });
     }, 3000);
   };
+
+  function setUserReview(review: IReview) {
+    dispatch({ type: ActionType.SET_USER_REVIEW, payload: review });
+  }
+
+  function addUserReviewDescription(description: string) {
+    dispatch({
+      type: ActionType.SET_USER_REVIEW_DESCRIPTION,
+      payload: description,
+    });
+  }
+
+  function goBackToCompany() {
+    dispatch({ type: ActionType.HIDE_REVIEW_FORM });
+  }
+
+  function setReviewForm(name: string, value: string | number) {
+    dispatch({
+      type: ActionType.SET_REVIEW_FORM,
+      payload: {
+        name,
+        value,
+      },
+    });
+  }
 
   function closeModal() {
     setIsModalOpen(false);
@@ -35,22 +61,17 @@ const ReviewForm: FC = () => {
   }
 
   function addReview() {
-    if (state.reviewForm.rating !== -1 && companyId) {
-      postReviewToCompany(companyId, state.reviewForm, showToastMessage).then(
-        (review) => {
-          dispatch({ type: ActionType.SET_USER_REVIEW, payload: review });
-          setIsModalOpen(true);
-        }
-      );
-    } else {
-      dispatch({
-        type: ActionType.SHOW_TOAST,
-        payload: "You must choose a star rating first",
+    if (state.reviewForm.rating !== -1 && state.companyId) {
+      postReviewToCompany(
+        state.companyId,
+        state.reviewForm,
+        showToastMessage
+      ).then((review) => {
+        if (review) setUserReview(review);
+        setIsModalOpen(true);
       });
-
-      setTimeout(() => {
-        dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
-      }, 3000);
+    } else {
+      showToastMessage("You must choose a star rating first");
     }
   }
 
@@ -58,29 +79,19 @@ const ReviewForm: FC = () => {
     if (
       state.reviewForm.description !== "" &&
       state.userReview?._id &&
-      companyId
+      state.companyId
     ) {
       updateReviewDescription(
-        companyId,
+        state.companyId,
         state.userReview?._id,
         state.reviewForm.description,
         showToastMessage
       ).then(() => {
-        dispatch({
-          type: ActionType.SET_USER_REVIEW_DESCRIPTION,
-          payload: state.reviewForm.description,
-        });
+        addUserReviewDescription(state.reviewForm.description);
         setIsModalOpen(true);
       });
     } else {
-      dispatch({
-        type: ActionType.SHOW_TOAST,
-        payload: "Please enter a description",
-      });
-
-      setTimeout(() => {
-        dispatch({ type: ActionType.HIDE_TOAST, payload: "" });
-      }, 3000);
+      showToastMessage("Please enter a description");
     }
   }
 
@@ -91,28 +102,12 @@ const ReviewForm: FC = () => {
 
   function updateReviewForm(event: any) {
     const { name, value } = event.target;
-    dispatch({
-      type: ActionType.SET_REVIEW_FORM,
-      payload: {
-        name,
-        value,
-      },
-    });
+    setReviewForm(name, value);
   }
 
   function setRating(value: number) {
     if (state.reviewForm.editMode) return undefined;
-    return dispatch({
-      type: ActionType.SET_REVIEW_FORM,
-      payload: {
-        name: "rating",
-        value,
-      },
-    });
-  }
-
-  function goBackToCompany() {
-    dispatch({ type: ActionType.HIDE_REVIEW_FORM });
+    setReviewForm("rating", value);
   }
 
   return (
