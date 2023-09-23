@@ -88,9 +88,7 @@ export const updateReviewDescription = async (
     description,
   })
     .then((response: AxiosResponse) => {
-      const { review } = response?.data;
-      showToastMessage("Your review description was updated");
-      return review ?? null;
+      showToastMessage(response?.data as string);
     })
     .catch((error: AxiosError) => {
       showToastMessage(error.response?.data as string);
