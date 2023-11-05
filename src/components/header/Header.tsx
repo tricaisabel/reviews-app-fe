@@ -8,7 +8,7 @@ const Header: FC = () => {
   console.log(state.user.url);
   return (
     <header className="header">
-      <h3>Company Review</h3>
+      <h3>Product Review</h3>
 
       {state.user && (
         <>

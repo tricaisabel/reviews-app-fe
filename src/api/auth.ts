@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { API } from "./company";
+import { API } from "./product";
 
 export const auth = async (
   requestBody: object,
@@ -17,7 +17,7 @@ export const auth = async (
         setUrl(user.url);
         localStorage.setItem("email", user.email);
         localStorage.setItem("url", user.url);
-        navigate("/companies");
+        navigate("/products");
       }
     })
     .catch((error: AxiosError) => {

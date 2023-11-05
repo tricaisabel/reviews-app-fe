@@ -1,19 +1,19 @@
 import { useContext, useEffect } from "react";
 import Card from "../card/Card";
-import "./Companies.css";
-import { getCompanies } from "../../api/company";
+import "./Products.css";
+import { getProducts } from "../../api/product";
 import { useNavigate } from "react-router-dom";
 import { Action, ActionType } from "../../store/actions";
 import { StateContext, DispatchContext } from "../../App";
-import { ICompany } from "../../store/state.interface";
+import { IProduct } from "../../store/state.interface";
 
-export default function Companies() {
+export default function Products() {
   const navigate = useNavigate();
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
 
-  function setCompanies(companies: ICompany[]) {
-    dispatch({ type: ActionType.SET_COMPANIES, payload: companies });
+  function setProducts(products: IProduct[]) {
+    dispatch({ type: ActionType.SET_COMPANIES, payload: products });
   }
 
   const showToastMessage = (message: string) => {
@@ -28,22 +28,22 @@ export default function Companies() {
   };
 
   useEffect(() => {
-    getCompanies(showToastMessage, navigate).then((companies) => {
-      if (companies) setCompanies(companies);
+    getProducts(showToastMessage, navigate).then((products) => {
+      if (products) setProducts(products);
     });
   }, []);
 
   return (
-    <div className="companies--container">
+    <div className="products--container">
       <a className="blue" onClick={() => navigate("/")}>
         <span className="previous">&#8249;</span> Home
       </a>
-      <h1 className="center">Companies</h1>
+      <h1 className="center">Products</h1>
 
-      <div className="companies--list">
-        {state.companies.length &&
-          state.companies.map((company: ICompany) => (
-            <Card key={company._id} {...company} />
+      <div className="products--list">
+        {state.products.length &&
+          state.products.map((product: IProduct) => (
+            <Card key={product._id} {...product} />
           ))}
       </div>
     </div>

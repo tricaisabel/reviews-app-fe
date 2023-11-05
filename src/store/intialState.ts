@@ -19,9 +19,9 @@ export const initialState: IState = {
     editMode: false,
     show: false,
   },
-  companies: [],
-  company: null,
-  companyId: localStorage.getItem("companyId") ?? null,
+  products: [],
+  product: null,
+  productId: localStorage.getItem("productId") ?? null,
   latestReviews: [],
   userReview: null,
   toast: {

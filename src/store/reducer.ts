@@ -38,7 +38,7 @@ export function reducer(state: IState, action: Action): IState {
     case ActionType.SET_COMPANIES:
     case ActionType.SET_USER_REVIEW: {
       const property =
-        action.type === ActionType.SET_COMPANIES ? "companies" : "userReview";
+        action.type === ActionType.SET_COMPANIES ? "products" : "userReview";
       return {
         ...state,
         [property]: action.payload,
@@ -57,7 +57,7 @@ export function reducer(state: IState, action: Action): IState {
     case ActionType.CHANGE_COMPANY:
       return {
         ...state,
-        companyId: action.payload,
+        productId: action.payload,
         latestReviews: [],
         userReview: null,
         reviewForm: {
@@ -71,7 +71,7 @@ export function reducer(state: IState, action: Action): IState {
     case ActionType.SET_COMPANY_DATA: {
       return {
         ...state,
-        company: action.payload,
+        product: action.payload,
       };
     }
     case ActionType.SET_LATEST_REVIEWS: {

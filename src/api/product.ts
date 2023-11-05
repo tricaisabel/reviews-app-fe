@@ -1,19 +1,19 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ICompany, IReview, IReviewForm } from "../store/state.interface";
+import { IProduct, IReview, IReviewForm } from "../store/state.interface";
 
 export const API = axios.create({
   baseURL: "http://localhost:8080",
   withCredentials: true,
 });
 
-export const getCompanies = async (
+export const getProducts = async (
   showToastMessage: (text: string) => void,
   navigate: (path: string) => void
 ) => {
-  return API.get<ICompany[]>("/companies")
+  return API.get<IProduct[]>("/products")
     .then((response: AxiosResponse) => {
-      const { companies } = response.data;
-      return companies ?? [];
+      const { products } = response.data;
+      return products ?? [];
     })
     .catch((error: AxiosError) => {
       showToastMessage(error.response?.data as string);
@@ -21,15 +21,15 @@ export const getCompanies = async (
     });
 };
 
-export const getCompany = async (
-  companyId: string,
+export const getProduct = async (
+  productId: string,
   showToastMessage: (text: string) => void,
   navigate: (path: string) => void
 ) => {
-  return API.get<ICompany>(`/companies/${companyId}`)
+  return API.get<IProduct>(`/products/${productId}`)
     .then((response: AxiosResponse) => {
-      const { company } = response.data;
-      return company ?? null;
+      const { product } = response.data;
+      return product ?? null;
     })
     .catch((error: AxiosError) => {
       showToastMessage(error.response?.data as string);
@@ -37,8 +37,8 @@ export const getCompany = async (
     });
 };
 
-export const getUserReview = async (companyId: string) => {
-  return API.get<IReview>(`companies/${companyId}/reviews/user`)
+export const getUserReview = async (productId: string) => {
+  return API.get<IReview>(`products/${productId}/reviews/user`)
     .then((response: AxiosResponse) => {
       const { review } = response.data;
       return review ?? null;
@@ -48,10 +48,10 @@ export const getUserReview = async (companyId: string) => {
     });
 };
 
-export const getLatestReviews = async (companyId: string, end: number) => {
+export const getLatestReviews = async (productId: string, end: number) => {
   const param = end ?? 3;
   return API.get<IReview[]>(
-    `companies/${companyId}/reviews/latest?end=${param}`
+    `products/${productId}/reviews/latest?end=${param}`
   )
     .then((response: AxiosResponse) => {
       const { reviews } = response.data;
@@ -62,12 +62,12 @@ export const getLatestReviews = async (companyId: string, end: number) => {
     });
 };
 
-export const postReviewToCompany = async (
-  companyId: string,
+export const postReviewToProduct = async (
+  productId: string,
   requestBody: IReviewForm,
   showToastMessage: (message: string) => void
 ) => {
-  return API.post(`/companies/${companyId}/reviews`, requestBody)
+  return API.post(`/products/${productId}/reviews`, requestBody)
     .then((response: AxiosResponse) => {
       const { review } = response?.data;
       showToastMessage("Your review was added");
@@ -79,12 +79,12 @@ export const postReviewToCompany = async (
 };
 
 export const updateReviewDescription = async (
-  companyId: string,
+  productId: string,
   reviewId: string,
   description: string,
   showToastMessage: (message: string) => void
 ) => {
-  return API.patch(`/companies/${companyId}/reviews/${reviewId}`, {
+  return API.patch(`/products/${productId}/reviews/${reviewId}`, {
     description,
   })
     .then((response: AxiosResponse) => {

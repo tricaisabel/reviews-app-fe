@@ -4,9 +4,9 @@ import { DispatchContext, StateContext } from "../../App";
 import { Action, ActionType } from "../../store/actions";
 import "./ReviewForm.css";
 import {
-  postReviewToCompany,
+  postReviewToProduct,
   updateReviewDescription,
-} from "../../api/company";
+} from "../../api/product";
 import { IReview } from "../../store/state.interface";
 
 const ReviewForm: FC = () => {
@@ -16,7 +16,7 @@ const ReviewForm: FC = () => {
 
   const title = `${
     state.reviewForm.editMode ? "Edit your" : "Add a"
-  } review at ${state.company?.name}`;
+  } review at ${state.product?.name}`;
 
   const showToastMessage = (message: string) => {
     dispatch({
@@ -40,7 +40,7 @@ const ReviewForm: FC = () => {
     });
   }
 
-  function goBackToCompany() {
+  function goBackToProduct() {
     dispatch({ type: ActionType.HIDE_REVIEW_FORM });
   }
 
@@ -56,13 +56,13 @@ const ReviewForm: FC = () => {
 
   function closeModal() {
     setIsModalOpen(false);
-    goBackToCompany();
+    goBackToProduct();
   }
 
   function addReview() {
-    if (state.reviewForm.rating !== -1 && state.companyId) {
-      postReviewToCompany(
-        state.companyId,
+    if (state.reviewForm.rating !== -1 && state.productId) {
+      postReviewToProduct(
+        state.productId,
         state.reviewForm,
         showToastMessage
       ).then((review) => {
@@ -78,10 +78,10 @@ const ReviewForm: FC = () => {
     if (
       state.reviewForm.description !== "" &&
       state.userReview?._id &&
-      state.companyId
+      state.productId
     ) {
       updateReviewDescription(
-        state.companyId,
+        state.productId,
         state.userReview?._id,
         state.reviewForm.description,
         showToastMessage
@@ -111,9 +111,9 @@ const ReviewForm: FC = () => {
 
   return (
     <>
-      {state.company && state.reviewForm.show && (
+      {state.product && state.reviewForm.show && (
         <div className="new--review--container">
-          <a className="blue previous-btn" onClick={goBackToCompany}>
+          <a className="blue previous-btn" onClick={goBackToProduct}>
             <span className="previous">&#8249;</span> Reviews
           </a>
 

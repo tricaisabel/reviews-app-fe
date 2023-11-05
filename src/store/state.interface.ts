@@ -1,4 +1,4 @@
-export interface ICompany {
+export interface IProduct {
   url: string;
   averageRating: number;
   reviewCount: number;
@@ -42,9 +42,9 @@ export interface IState {
   user: ICurrentUser;
   loginForm: ILoginForm;
   reviewForm: IReviewForm;
-  companies: ICompany[];
-  companyId: string | null;
-  company: ICompany | null;
+  products: IProduct[];
+  productId: string | null;
+  product: IProduct | null;
   latestReviews: IReview[];
   userReview: IReview | null;
   toast: IToast;

@@ -1,4 +1,4 @@
-import { ICompany, IReview } from "./state.interface";
+import { IProduct, IReview } from "./state.interface";
 
 export type Action =
   | {
@@ -16,11 +16,11 @@ export type Action =
     }
   | {
       type: typeof ActionType.SET_COMPANIES;
-      payload: ICompany[];
+      payload: IProduct[];
     }
   | {
       type: typeof ActionType.SET_COMPANY_DATA;
-      payload: ICompany | null;
+      payload: IProduct | null;
     }
   | {
       type: typeof ActionType.SET_LATEST_REVIEWS;

@@ -2,9 +2,9 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Header from "./components/header/Header";
 import Hero from "./components/hero/Hero";
 import "./App.css";
-import Companies from "./components/companies/Companies";
+import Products from "./components/products/Products";
 import Auth, { LOG_IN, SIGN_UP } from "./components/auth/Auth";
-import Company from "./components/company/Company";
+import Product from "./components/product/Product";
 import { Dispatch, createContext, useReducer } from "react";
 import { reducer } from "./store/reducer";
 import { Action } from "./store/actions";
@@ -32,8 +32,8 @@ function App() {
                 <Route path="/" element={<Hero />} />
                 <Route path="signup" element={<Auth type={SIGN_UP} />} />
                 <Route path="login" element={<Auth type={LOG_IN} />} />
-                <Route path="companies" element={<Companies />} />
-                <Route path="companies/:companyId" element={<Company />} />
+                <Route path="products" element={<Products />} />
+                <Route path="products/:productId" element={<Product />} />
               </Routes>
             </BrowserRouter>
             <Toast />

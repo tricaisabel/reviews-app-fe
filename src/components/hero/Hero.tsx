@@ -8,7 +8,7 @@ const Hero = () => {
 
   return (
     <div className="hero--container">
-      <img src={heroImage} className="hero--image" alt="companies" />
+      <img src={heroImage} className="hero--image" alt="products" />
 
       <div className="hero--main">
         <span className="hero--title">
@@ -37,9 +37,9 @@ const Hero = () => {
 
           <button
             className="button_primary background_blue"
-            onClick={() => navigate("/companies")}
+            onClick={() => navigate("/products")}
           >
-            Companies
+            Products
           </button>
         </div>
       </div>

@@ -1,23 +1,23 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Company.css";
+import "./Product.css";
 import { DispatchContext, StateContext } from "../../App";
 import { Summary } from "./Summary";
 import { UserReview } from "./UserReview";
 import ReviewForm from "../review-form/ReviewForm";
-import { getCompany, getLatestReviews, getUserReview } from "../../api/company";
+import { getProduct, getLatestReviews, getUserReview } from "../../api/product";
 import { Action, ActionType } from "../../store/actions";
-import { ICompany, IReview } from "../../store/state.interface";
+import { IProduct, IReview } from "../../store/state.interface";
 import Review from "../review/Review";
 
-const Company: FC = () => {
+const Product: FC = () => {
   const navigate = useNavigate();
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext) as React.Dispatch<Action>;
   const [end, setEnd] = useState(3); // how many reviews are displayed
 
-  function setCompany(company: ICompany) {
-    dispatch({ type: ActionType.SET_COMPANY_DATA, payload: company });
+  function setProduct(product: IProduct) {
+    dispatch({ type: ActionType.SET_COMPANY_DATA, payload: product });
   }
 
   function setLatestReviews(reviews: IReview[]) {
@@ -29,7 +29,7 @@ const Company: FC = () => {
   }
 
   function goBack() {
-    navigate("/companies");
+    navigate("/products");
     dispatch({ type: ActionType.SET_COMPANY_DATA, payload: null });
   }
 
@@ -50,54 +50,54 @@ const Company: FC = () => {
 
   // get the user's review on the first render
   useEffect(() => {
-    if (!state.companyId) {
-      return navigate("/companies");
+    if (!state.productId) {
+      return navigate("/products");
     }
-    getUserReview(state.companyId).then((review) => {
+    getUserReview(state.productId).then((review) => {
       if (review) setUserReview(review);
     });
   }, []);
 
-  // get the company info on first render and when userReview changes
+  // get the product info on first render and when userReview changes
   useEffect(() => {
-    if (!state.companyId) {
-      return navigate("/companies");
+    if (!state.productId) {
+      return navigate("/products");
     }
-    getCompany(state.companyId, showToastMessage, navigate).then((company) =>
-      setCompany(company)
+    getProduct(state.productId, showToastMessage, navigate).then((product) =>
+      setProduct(product)
     );
   }, [state.userReview]);
 
   // get the latest reviews on first render and when end changes
   useEffect(() => {
-    if (!state.companyId) {
-      return navigate("/companies");
+    if (!state.productId) {
+      return navigate("/products");
     }
-    getLatestReviews(state.companyId, end).then((reviews) => {
+    getLatestReviews(state.productId, end).then((reviews) => {
       if (reviews) setLatestReviews(reviews);
     });
   }, [end]);
 
   return (
     <div>
-      {!state.reviewForm.show && state.company && (
+      {!state.reviewForm.show && state.product && (
         <>
           <img
-            src={state.company.url}
-            alt="Company photo"
+            src={state.product.url}
+            alt="Product photo"
             className="container--image"
           />
 
           <div className="container--info">
             <a className="blue" onClick={goBack}>
-              <span className="previous">&#8249;</span> All Companies
+              <span className="previous">&#8249;</span> All Products
             </a>
 
-            <h1 className="center">{state.company.name}</h1>
+            <h1 className="center">{state.product.name}</h1>
             <h2>Reviews</h2>
 
             <Summary
-              viewAllReviews={() => setEnd(state.company?.reviewCount ?? 0)}
+              viewAllReviews={() => setEnd(state.product?.reviewCount ?? 0)}
             />
             <UserReview />
 
@@ -113,7 +113,7 @@ const Company: FC = () => {
               <p className="small">No reviews yet.</p>
             )}
 
-            {state.company.reviewCount > end && (
+            {state.product.reviewCount > end && (
               <a className="blue bold center" onClick={loadMoreReviews}>
                 Load more reviews
               </a>
@@ -127,4 +127,4 @@ const Company: FC = () => {
   );
 };
 
-export default Company;
+export default Product;

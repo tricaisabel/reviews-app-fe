@@ -9,19 +9,19 @@ export const Summary: FC<SummaryProps> = ({ viewAllReviews }) => {
 
   return (
     <>
-      {state.company && (
+      {state.product && (
         <>
           <div className="summary--info">
             <div className="rating--box bold">
-              {state.company.averageRating}
+              {state.product.averageRating}
             </div>
 
             <p className="small summary--counter">
-              from {state.company.reviewCount} review
-              {state.company.reviewCount !== 1 && "s"}
+              from {state.product.reviewCount} review
+              {state.product.reviewCount !== 1 && "s"}
             </p>
 
-            {state.latestReviews.length > 0 && state.company && (
+            {state.latestReviews.length > 0 && state.product && (
               <a className="blue right" onClick={viewAllReviews}>
                 View all reviews
               </a>

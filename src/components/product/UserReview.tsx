@@ -3,7 +3,7 @@ import { DispatchContext, StateContext } from "../../App";
 import Review from "../review/Review";
 import StarRating from "../star-rating/StarRating";
 import { Action, ActionType } from "../../store/actions";
-import "./Company.css";
+import "./Product.css";
 import { USER_IMAGE } from "../../store/intialState";
 
 export const UserReview = () => {
@@ -26,7 +26,7 @@ export const UserReview = () => {
 
   return (
     <>
-      {state.company && (
+      {state.product && (
         <>
           <h3>Your Review</h3>
           {state.userReview && <Review review={state.userReview} />}
@@ -40,7 +40,7 @@ export const UserReview = () => {
             </a>
           )}
 
-          {state.company && !state.userReview && (
+          {state.product && !state.userReview && (
             <div className="review--container">
               <img
                 src={USER_IMAGE}
