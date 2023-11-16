@@ -1,21 +1,17 @@
 .card {
-    width: 200px;
-    font-size: 12px;
+    width: 370px;
     position: relative;
     margin-bottom: 25px;
     padding: 10px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     transition: all .2s ease-in-out; 
-}
-
-.card:hover{
-    transform: scale(1.05);
+    margin:20px
 }
 
 .card--image--container{
-    width:176px;
-    height:235px
+    width:350px;
+    height:400px
 }
 
 .card--image {
@@ -25,23 +21,19 @@
     object-fit:cover;
 }
 
-.card--image :hover { 
-    transform: scale(3); 
-    z-index: -1;
-}
-
 .card--badge {
+    background-color: white;
+    padding: 5px 7px;
+    border-radius: 8px;
+    width: fit-content;
+    margin: 5px;
+}
+        .card--badge-position {
     position: absolute;
     z-index: 1;
     top: 15px;
     left: 15px;
-    background-color: white;
-    padding: 5px 7px;
-    border-radius: 2px;
-    font-weight: bold;
-    width:fit-content
 }
-
 .card--stats {
     display: flex;
     align-items: center;

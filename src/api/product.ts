@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { IProduct, IReview, IReviewForm } from "../store/state.interface";
+import { ICartItem, IProduct, IReview, IReviewForm, ProductForm } from "../store/state.interface";
 
 export const API = axios.create({
   baseURL: "http://localhost:8080",
@@ -24,7 +24,6 @@ export const getProducts = async (
 export const getProduct = async (
   productId: string,
   showToastMessage: (text: string) => void,
-  navigate: (path: string) => void
 ) => {
   return API.get<IProduct>(`/products/${productId}`)
     .then((response: AxiosResponse) => {
@@ -33,7 +32,6 @@ export const getProduct = async (
     })
     .catch((error: AxiosError) => {
       showToastMessage(error.response?.data as string);
-      navigate("/login");
     });
 };
 
@@ -94,3 +92,85 @@ export const updateReviewDescription = async (
       showToastMessage(error.response?.data as string);
     });
 };
+
+export const addProductToCart = async (
+  productId: string | undefined,
+  quantity: number,
+  size: string,
+  showToastMessage: (message: string) => void
+)=>{
+  if(!productId){
+    return;
+  }
+  return API.post(`auth/cart`, {productId, quantity, size})
+    .then(() => {
+      showToastMessage("Your product was added to the shopping cart");
+    })
+    .catch((error: AxiosError) => {
+      showToastMessage(error.response?.data as string);
+    });
+}
+
+export const getCartProducts = async ()=>{
+  return API.get<{cartItems:ICartItem[]}>(`auth/cart`)
+    .then((response: AxiosResponse) => {
+      const {cartItems}=response.data;
+      return cartItems ?? null;
+    })
+    .catch((error: AxiosError) => {
+    });
+}
+
+export const removeProductFromCart = async (itemId: string) =>{
+  return API.delete(`auth/cart/${itemId}`)
+  .then((response: AxiosResponse) => {
+  })
+  .catch((error: AxiosError) => {
+  });
+}
+
+export const addProduct = async (productForm: ProductForm)=>{
+  const formData = new FormData();
+  productForm.file && formData.append('file', productForm.file);
+  formData.append('name',productForm.name);
+  formData.append('price',productForm.price.toString());
+  formData.append('composition', productForm.composition);
+
+  return API.post(`products`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  .then((response: AxiosResponse) => {
+    return response.data.product;
+  })
+  .catch((error: AxiosError) => {
+  });
+}
+
+export const editProduct = async (productForm: ProductForm, productId: string)=>{
+  const formData = new FormData();
+  productForm.file && formData.append('file', productForm.file);
+  formData.append('name',productForm.name);
+  formData.append('price',productForm.price.toString());
+  formData.append('composition', productForm.composition);
+
+  return API.patch(`products/${productId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  .then((response: AxiosResponse) => {
+    return response.data.product;
+  })
+  .catch((error: AxiosError) => {
+  });
+}
+
+export const deleteProduct = async (productId: string)=>{
+  return API.delete(`products/${productId}`)
+  .then((response: AxiosResponse) => {
+  })
+  .catch((error: AxiosError) => {
+  });
+}

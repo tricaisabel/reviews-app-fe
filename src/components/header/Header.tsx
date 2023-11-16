@@ -2,33 +2,50 @@ import { FC, useContext } from "react";
 import "./Header.css";
 import { logout } from "../../api/auth";
 import { StateContext } from "../../App";
+import {
+  faCartShopping,
+  faCloud,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Col, Row } from "reactstrap";
 
 const Header: FC = () => {
   const state = useContext(StateContext);
-  console.log(state.user.url);
   return (
     <header className="header">
-      <h3>Product Review</h3>
+      <Col >
+        <FontAwesomeIcon icon={faCloud} />
+        <span className="m-2">Knit Shop</span>
+      </Col>
 
       {state.user && (
         <>
-          <div className="header--profile">
+           <Col size="xs" className="col-auto">
             <img
               src={state.user.url}
               alt="Profile image"
               className="profile--image"
             />
+            <span className="m-2">{state.user.email} {state.user.isAdmin === true  && '(admin)'}</span>
+          </Col>
 
-            <p className="white">
-              {state.user.email?.slice(0, state.user.email.indexOf("@"))}
-            </p>
-          </div>
-
-          <div className="header--logout">
-            <a href="/" onClick={logout}>
-              <p className="white">Log out</p>
+          <Col size="xs" className="col-auto m-3" >
+            <Col>
+              <FontAwesomeIcon icon={faCartShopping} />
+            <a href="/shopping-cart">
+              <span className="white m-2">Shopping Cart</span>
             </a>
-          </div>
+            </Col>
+            
+          </Col>
+
+          <Col size="xs" className="col-auto m-3">
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            <a href="/" onClick={logout}>
+              <span className="white m-2">Log out</span>
+            </a>
+          </Col>
         </>
       )}
     </header>

@@ -24,3 +24,30 @@
 .add--description-btn{
     margin-left: 70px;
 }
+.flex {
+    display: flex;
+}
+
+.product--row {
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.product--price {
+    justify-content: center;
+}
+
+.product--price p {
+    margin-left: 5px;
+}
+
+.prev--button {
+    margin-bottom: 20px;
+}
+
+.product--size {
+    padding: 5px;
+    width: 150px;
+    border-width: 0px;
+}

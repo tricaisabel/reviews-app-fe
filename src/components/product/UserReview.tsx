@@ -49,7 +49,6 @@ export const UserReview = () => {
               />
 
               <div className="review--details">
-                <h3>Rate and review</h3>
                 <p className="small">Share your experience to help others.</p>
                 <div onClick={() => showReviewForm(false)}>
                   <StarRating size={"big"} onClick={setRating} />

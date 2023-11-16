@@ -4,6 +4,11 @@ export interface IProduct {
   reviewCount: number;
   name: string;
   _id: string;
+  discount: number;
+  price: number;
+  tags: string[];
+  color: string;
+  composition: string;
 }
 
 export interface ILoginForm {
@@ -36,6 +41,7 @@ export interface IReview {
 export interface ICurrentUser {
   email: string;
   url: string;
+  isAdmin: boolean;
 }
 
 export interface IState {
@@ -48,4 +54,58 @@ export interface IState {
   latestReviews: IReview[];
   userReview: IReview | null;
   toast: IToast;
+  editedProduct: IProduct | null;
+  total: number
+}
+
+export interface ICartItem {
+  productImage: string;
+  productName: string;
+  productPrice: number;
+  quantity: number;
+  size: string;
+  _id: string;
+}
+
+export enum Tags {
+  TOPS="Tops", 
+  SWEATERS="Sweaters", 
+  DRESSES="Dresses", 
+  VESTS="Vests", 
+  BIKINIS="Bikinis", 
+  HATS="Hats", 
+  SCARVES="Scarves", 
+  GLOVES="Gloves", 
+  BEANIES="Beanies", 
+  WINTER_COLLECTION="Winter Collection", 
+  SUMMER_COLLECTION="Summer Collection", 
+  SPRING_COLLECTION="Spring Collection", 
+  AUTUMN_COLLECTION="Autumn Collection"
+}
+
+export enum Colors {
+  RED = 'Red',
+  GREEN = 'Green',
+  BLUE = 'Blue',
+  YELLOW = 'Yellow',
+  ORANGE = 'Orange',
+  PURPLE = 'Purple',
+  PINK = 'Pink',
+  BROWN = 'Brown',
+  GRAY = 'Gray',
+  BLACK = 'Black',
+  WHITE = 'White',
+  TEAL = 'Teal',
+  CYAN = 'Cyan',
+  MAGENTA = 'Magenta',
+  LIME = 'Lime',
+};
+export interface ProductForm {
+  name: string;
+  file?: File;
+  price: number;
+  tags?: Tags;
+  color?: Colors;
+  discount?: number;
+  composition: string;
 }

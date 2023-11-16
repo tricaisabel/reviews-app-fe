@@ -22,7 +22,11 @@ export function reducer(state: IState, action: Action): IState {
         ...state,
         user: { ...state.user, url: action.payload },
       };
-
+    case ActionType.SET_IS_ADMIN:
+      return {
+        ...state,
+        user: { ...state.user, isAdmin: action.payload },
+      };
     case ActionType.SET_LOGIN_FORM:
     case ActionType.SET_REVIEW_FORM: {
       const formType =
@@ -115,6 +119,23 @@ export function reducer(state: IState, action: Action): IState {
           editMode: false,
         },
       };
+    case ActionType.SET_EDIT_PRODUCT:
+      return {
+        ...state,
+        editedProduct: action.payload.product
+      }
+    case ActionType.SET_TOTAL:
+      return {
+        ...state,
+        total: action.total
+      }
+    case ActionType.DELETE_PRODUCT:
+      const {productId} = action.payload;
+      const newProducts = state.products.filter(p=>p._id!==productId);
+      return {
+        ...state,
+        products: newProducts
+      }
     default:
       return state;
   }

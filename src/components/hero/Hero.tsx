@@ -1,26 +1,23 @@
-import heroImage from "../../assets/hero.png";
-import logo from "../../assets/logo.png";
+import heroImage from "../../assets/hero.jpg";
 import { useNavigate } from "react-router-dom";
 import "./Hero.css";
+import { Container, Row } from "reactstrap";
 
 const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="hero--container">
-      <img src={heroImage} className="hero--image" alt="products" />
+    <Container>
+      <Row className="justify-content-center">
+      <img src={heroImage} className="hero--image" alt="products" style={{width:'45vw', height:'auto'}}/>
 
-      <div className="hero--main">
-        <span className="hero--title">
-          <img src={logo} className="hero--icon" alt="star icon" />
-          <h1 className="hero--primary"> Review your experiences</h1>
-        </span>
+      </Row>
 
-        <p className="hero--secondary">
-          Join the team of expert reviewers and help us find the best spots.
-        </p>
+      <Row className="justify-content-center m-5" >
+        <h1 style={{width:'fit-content'}}> Welcome to the knit shop!</h1>
+        </Row>
 
-        <div className="hero--buttons">
+        <Row className="justify-content-center">
           <button
             className="button_primary background_yellow"
             onClick={() => navigate("/signup")}
@@ -41,9 +38,8 @@ const Hero = () => {
           >
             Products
           </button>
-        </div>
-      </div>
-    </div>
+        </Row>
+    </Container>
   );
 };
 

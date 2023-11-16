@@ -1,14 +1,16 @@
 import { FC, useContext } from "react";
 import { StateContext } from "../../App";
-import "./Toast.css";
-const Toast: FC = () => {
+import { Toast, ToastBody, ToastHeader } from "reactstrap";
+
+const ToastComponent: FC = () => {
   const state = useContext(StateContext);
 
   return (
-    <div>
-      {state.toast.show && <div className="toast">{state.toast.message}</div>}
-    </div>
+    <Toast isOpen={state.toast.show}>
+      <ToastHeader>Pop up</ToastHeader>
+      <ToastBody>{state.toast.message} </ToastBody>
+    </Toast>
   );
 };
 
-export default Toast;
+export default ToastComponent;

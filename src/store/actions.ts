@@ -31,6 +31,29 @@ export type Action =
       payload: IReview;
     }
   | {
+    type: typeof ActionType.SET_IS_ADMIN;
+    payload: boolean;
+  }
+  |
+  {
+    type: typeof ActionType.SET_EDIT_PRODUCT;
+    payload: {
+      product: IProduct | null
+    }
+  }
+  |
+  {
+    type: typeof ActionType.DELETE_PRODUCT;
+    payload: {
+      productId: string
+    }
+  }
+  |
+  {
+    type: typeof ActionType.SET_TOTAL;
+    total: number
+  }
+  | {
       type:
         | typeof ActionType.SET_USER_REVIEW_DESCRIPTION
         | typeof ActionType.SHOW_TOAST
@@ -52,6 +75,7 @@ export type Action =
 export enum ActionType {
   SET_EMAIL = "SET_EMAIL",
   SET_URL = "SET_URL",
+  SET_IS_ADMIN="SET_IS_ADMIN",
   SET_RATING = "SET_RATING",
   SET_LOGIN_FORM = "SET_LOGIN_FORM",
   SET_REVIEW_FORM = "SET_REVIEW_FORM",
@@ -65,4 +89,8 @@ export enum ActionType {
   HIDE_TOAST = "HIDE_TOAST",
   SHOW_REVIEW_FORM = "SHOW_REVIEW_FORM",
   HIDE_REVIEW_FORM = "HIDE_REVIEW_FORM",
+  SET_EDIT_PRODUCT="SET_EDIT_PRODUCT",
+  DELETE_PRODUCT="DELETE_PRODUCT",
+  SET_TOTAL="SET_TOTAL"
 }
+

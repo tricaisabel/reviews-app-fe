@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../api/auth";
 import { Action, ActionType } from "../../store/actions";
 import { StateContext, DispatchContext } from "../../App";
+import { Button, Card, CardBody, CardTitle, Col, Row } from "reactstrap";
+import ToastComponent from "../toast/Toast";
 
 export const SIGN_UP = "signup";
 export const LOG_IN = "login";
@@ -25,6 +27,10 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
 
   function setUrl(url: string) {
     dispatch({ type: ActionType.SET_URL, payload: url });
+  }
+
+  function setIsAdmin(isAdmin: boolean) {
+    dispatch({type: ActionType.SET_IS_ADMIN, payload: isAdmin})
   }
 
   const showToastMessage = (message: string) => {
@@ -81,69 +87,69 @@ const Auth: FC<AuthFormProps> = ({ type }) => {
       type,
       setUrl,
       setEmail,
+      setIsAdmin,
       navigate,
       showToastMessage
     );
   }
 
   return (
-    <>
-      <form onSubmit={submitNewUser}>
-        <img src={image} alt="Auth illustration" className="container--image" />
+    <Card style={{ width: "50%", marginTop: "10%" }}>
+      <CardBody>
+        <CardTitle tag="h1" className="center">
+          {text}
+        </CardTitle>
+        <label htmlFor="email">
+          <b>Email</b>
+        </label>
+        <input
+          type="email"
+          placeholder="Enter Email"
+          name="email"
+          required
+          value={state.loginForm.email}
+          onChange={setLoginForm}
+        />
 
-        <div className="container--info">
-          <h1 className="center">{text}</h1>
-          <label htmlFor="email">
-            <b>Email</b>
-          </label>
-          <input
-            type="email"
-            placeholder="Enter Email"
-            name="email"
-            required
-            value={state.loginForm.email}
-            onChange={setLoginForm}
-          />
+        <label htmlFor="password">
+          <b>Password</b>
+        </label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="password"
+          required
+          value={state.loginForm.password}
+          onChange={setLoginForm}
+        />
 
-          <label htmlFor="password">
-            <b>Password</b>
-          </label>
-          <input
-            type="password"
-            placeholder="Enter Password"
-            name="password"
-            required
-            value={state.loginForm.password}
-            onChange={setLoginForm}
-          />
+        {type === SIGN_UP && (
+          <>
+            <label htmlFor="repeat">
+              <b>Repeat Password</b>
+            </label>
+            <input
+              type="password"
+              placeholder="Repeat Password"
+              name="repeat"
+              required
+              onChange={setLoginForm}
+              ref={repeatPasswordInput}
+            />
+          </>
+        )}
+        <a className="blue" onClick={clickLink}>
+          {getLinkText()}
+        </a>
 
-          {type === SIGN_UP && (
-            <>
-              <label htmlFor="repeat">
-                <b>Repeat Password</b>
-              </label>
-              <input
-                type="password"
-                placeholder="Repeat Password"
-                name="repeat"
-                required
-                onChange={setLoginForm}
-                ref={repeatPasswordInput}
-              />
-            </>
-          )}
-          <a className="blue" onClick={clickLink}>
-            {getLinkText()}
-          </a>
-
-          <br />
-          <br />
-          <button type="submit" className={getButtonClass()}>
-            {text}
-          </button>
-        </div>
-      </form>
-    </>
+        <Row className="justify-content-center m-4">
+          <Button className={getButtonClass()} onClick={(e) => submitNewUser(e)}>
+          {text}
+        </Button>
+        </Row>
+        
+      </CardBody>
+    </Card>
   );
 };
 

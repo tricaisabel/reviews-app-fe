@@ -6,6 +6,7 @@ export const auth = async (
   type: string,
   setUrl: (email: string) => void,
   setEmail: (email: string) => void,
+  setIsAdmin: (isAdmin: boolean) => void,
   navigate: (url: string) => void,
   showToastMessage: (message: string) => void
 ) => {
@@ -15,8 +16,10 @@ export const auth = async (
       if (user) {
         setEmail(user.email);
         setUrl(user.url);
+        setIsAdmin(user.isAdmin);
         localStorage.setItem("email", user.email);
         localStorage.setItem("url", user.url);
+        localStorage.setItem("isAdmin", user.isAdmin ? "true" : "false")
         navigate("/products");
       }
     })
@@ -29,6 +32,7 @@ export const auth = async (
 export const logout = async () => {
   localStorage.removeItem("email");
   localStorage.removeItem("url");
+  localStorage.removeItem("isAdmin")
   return API.post("/auth/logout")
     .then((response: AxiosResponse) => {
       console.log(response.data);
